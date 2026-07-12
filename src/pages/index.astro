@@ -1,0 +1,260 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+
+const projects = await getCollection('projects');
+const featured = projects
+  .filter((p) => p.data.featured)
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<Base title="Home">
+  <!-- Hero -->
+  <section class="wrap hero">
+    <div>
+      <p class="eyebrow">Learning Systems Designer — AI in Education</p>
+      <h1>Everything starts from <span class="accentline">a human problem.</span></h1>
+      <p class="thesis">
+        I build things that teach people how to think — and measure whether they work. AI handles
+        what doesn't require judgment, so time, attention, and presence go where only a human can.
+      </p>
+      <div class="ctarow">
+        <a class="btn solid" href="/projects/">View projects</a>
+        <a class="btn" href="/teaching-philosophy/">Read the philosophy</a>
+      </div>
+    </div>
+    <svg class="diagram" viewBox="0 0 300 320" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <line x1="20" y1="20" x2="20" y2="290" stroke="var(--rule)" stroke-width="1"></line>
+      <line x1="20" y1="290" x2="290" y2="290" stroke="var(--rule)" stroke-width="1"></line>
+      <path
+        class="trace-path"
+        d="M20,260 C70,255 90,150 130,140 C170,130 190,60 220,45 C240,35 260,30 280,22"></path>
+      <circle cx="280" cy="22" r="4" fill="var(--accent)"></circle>
+      <text x="26" y="40" class="axislabel">retention</text>
+      <text x="180" y="308" class="axislabel">productive struggle →</text>
+    </svg>
+  </section>
+
+  <!-- Two audiences -->
+  <section class="wrap section reveal">
+    <div class="section-head">
+      <span class="eyebrow">Two ways in</span>
+      <div class="hrule"></div>
+      <h2>Choose the path that fits you</h2>
+    </div>
+    <div class="paths">
+      <div class="path">
+        <p class="pathlabel">For collaborators &amp; employers</p>
+        <p>
+          Start with <a href="/about/">About</a> for the full picture of my background and
+          approach, then explore the <a href="/projects/">Projects Gallery</a> for case studies
+          with impact evidence. <a href="/teaching-philosophy/">Teaching Philosophy</a> and
+          <a href="/human-classroom/">The Human Classroom</a> document the design thinking
+          underneath the work.
+        </p>
+      </div>
+      <div class="path">
+        <p class="pathlabel">For colleagues at Camosun</p>
+        <p>
+          Practical tools, guides, and workshop materials to help you integrate AI into your
+          teaching — built by a faculty member, for faculty. Head to
+          <a href="/for-colleagues/">Resources for Colleagues</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured projects -->
+  <section class="wrap section reveal">
+    <div class="section-head">
+      <span class="eyebrow">Selected work</span>
+      <div class="hrule"></div>
+      <h2>Case studies</h2>
+    </div>
+    <p class="sectionintro">
+      Each project started from a clearly defined human problem: a student who couldn't get
+      unstuck, a lecture format that wasn't working, a faculty member who needed a concrete
+      workflow. AI was one of the materials used to address it — not the starting point.
+    </p>
+    <div class="cardgrid">
+      {featured.map((project) => <ProjectCard project={project} />)}
+    </div>
+    <p class="allline">
+      <a href="/projects/">See all {projects.length} case studies &rarr;</a>
+    </p>
+  </section>
+
+  <!-- Impact strip -->
+  <section class="wrap section reveal">
+    <div class="section-head">
+      <span class="eyebrow">Impact snapshot</span>
+      <div class="hrule"></div>
+    </div>
+    <dl class="stats">
+      <div>
+        <dt>AI learning tools in active classroom use</dt>
+        <dd>6</dd>
+      </div>
+      <div>
+        <dt>Reduction in repeat tutor support requests</dt>
+        <dd>22%</dd>
+      </div>
+      <div>
+        <dt>Years designing STEM content at Brilliant.org</dt>
+        <dd>8</dd>
+      </div>
+      <div>
+        <dt>Faculty adoption within 10 days of PD workshop</dt>
+        <dd>80%</dd>
+      </div>
+    </dl>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 320px);
+    gap: 40px;
+    align-items: center;
+    padding-top: clamp(48px, 7vw, 88px);
+    padding-bottom: clamp(48px, 7vw, 88px);
+  }
+
+  .hero h1 {
+    font-size: clamp(2.3rem, 1.6rem + 3.2vw, 3.7rem);
+    line-height: 1.06;
+    margin-top: 18px;
+  }
+
+  .accentline {
+    color: var(--accent);
+  }
+
+  .thesis {
+    margin-top: 22px;
+    font-size: 1.1rem;
+    color: var(--ink-soft);
+    max-width: 52ch;
+  }
+
+  .ctarow {
+    margin-top: 30px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .diagram {
+    aspect-ratio: 1 / 1.05;
+  }
+
+  .axislabel {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--ink-faint);
+  }
+
+  .trace-path {
+    stroke: var(--accent);
+    stroke-width: 2.5;
+    fill: none;
+    stroke-linecap: round;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .trace-path {
+      stroke-dasharray: 520;
+      stroke-dashoffset: 520;
+      animation: draw 2.2s 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+  }
+
+  @keyframes draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .hero {
+      grid-template-columns: 1fr;
+    }
+
+    .diagram {
+      max-width: 200px;
+    }
+  }
+
+  .paths {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+  }
+
+  .pathlabel {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .path p:not(.pathlabel) {
+    color: var(--ink-soft);
+  }
+
+  .sectionintro {
+    color: var(--ink-soft);
+    max-width: 66ch;
+    margin-bottom: 32px;
+  }
+
+  .cardgrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+
+  .allline {
+    margin-top: 28px;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 32px;
+    margin: 0;
+  }
+
+  .stats dd {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 2.6rem;
+    margin: 0;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stats dt {
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+    order: 1;
+    max-width: 24ch;
+  }
+
+  .stats > div {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border-top: 2px solid var(--accent);
+    padding-top: 14px;
+  }
+</style>

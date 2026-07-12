@@ -1,0 +1,211 @@
+---
+// Site navigation. The current page gets an underline via aria-current.
+const nav = [
+  { href: '/about/', label: 'About' },
+  { href: '/projects/', label: 'Projects' },
+  { href: '/teaching-philosophy/', label: 'Teaching Philosophy' },
+  { href: '/human-classroom/', label: 'The Human Classroom' },
+  { href: '/for-colleagues/', label: 'For Colleagues' },
+  { href: '/contact/', label: 'Contact' },
+];
+
+const path = Astro.url.pathname;
+const isCurrent = (href: string) => path === href || path.startsWith(href + '');
+---
+
+<a class="skip" href="#main">Skip to content</a>
+<header class="siteheader">
+  <div class="wrap bar">
+    <a class="wordmark" href="/">Jim Miszaniec</a>
+    <nav aria-label="Main">
+      <button class="menubtn" aria-expanded="false" aria-controls="navlist">
+        Menu
+      </button>
+      <ul id="navlist" class="navlist">
+        {
+          nav.map((item) => (
+            <li>
+              <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+        <li>
+          <button class="themebtn" aria-label="Toggle dark mode" title="Toggle dark mode">
+            <span class="sun" aria-hidden="true">●</span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .skip {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 10px 16px;
+    z-index: 20;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+  }
+
+  .skip:focus {
+    left: 0;
+  }
+
+  .siteheader {
+    border-bottom: 1px solid var(--rule);
+    background: var(--paper);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  .wordmark {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 1.15rem;
+    color: var(--ink);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .navlist {
+    display: flex;
+    gap: 22px;
+    align-items: center;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .navlist a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-family: var(--font-mono);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  .navlist a:hover {
+    color: var(--ink);
+  }
+
+  .navlist a[aria-current='page'] {
+    color: var(--ink);
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 3px;
+  }
+
+  .menubtn {
+    display: none;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    background: none;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    color: var(--ink);
+    padding: 7px 14px;
+    cursor: pointer;
+  }
+
+  .themebtn {
+    background: none;
+    border: 1px solid var(--rule);
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    color: var(--ink-soft);
+    display: grid;
+    place-items: center;
+    font-size: 0.7rem;
+    line-height: 1;
+  }
+
+  .themebtn:hover {
+    color: var(--ink);
+    border-color: var(--ink-soft);
+  }
+
+  @media (max-width: 920px) {
+    .menubtn {
+      display: block;
+    }
+
+    .navlist {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--paper);
+      border-bottom: 1px solid var(--rule);
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+      padding: 8px clamp(20px, 4vw, 56px) 20px;
+    }
+
+    .navlist.open {
+      display: flex;
+    }
+
+    .navlist li {
+      width: 100%;
+    }
+
+    .navlist a {
+      display: block;
+      padding: 12px 0;
+      font-size: 0.95rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .navlist a[aria-current='page'] {
+      border-bottom: 1px solid var(--accent);
+    }
+
+    .navlist li:last-child {
+      padding-top: 14px;
+    }
+  }
+</style>
+
+<script>
+  // Mobile menu toggle.
+  const btn = document.querySelector('.menubtn');
+  const list = document.querySelector('#navlist');
+  btn?.addEventListener('click', () => {
+    const open = list?.classList.toggle('open');
+    btn.setAttribute('aria-expanded', String(Boolean(open)));
+  });
+
+  // Theme toggle: flips between light and dark and remembers the choice.
+  const themeBtn = document.querySelector('.themebtn');
+  themeBtn?.addEventListener('click', () => {
+    const root = document.documentElement;
+    const current =
+      root.dataset.theme ??
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const next = current === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    localStorage.setItem('theme', next);
+  });
+</script>

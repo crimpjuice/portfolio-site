@@ -1,0 +1,116 @@
+---
+title: 'Lab Redesign: Discovery Labs & The Customized Lab'
+category: Curriculum Design
+summary: Students learn by doing, not following. Discovery labs with a single objective and no procedure — and an AI-assisted torque lab where students model their own forearm as a biological lever.
+outcomes: Students engaged in genuine scientific reasoning — forming approaches, controlling variables, interpreting ambiguous data. The Arm as a Lever produced a counterintuitive result that connected physics to evolutionary biology in a memorable way.
+tools: [Claude]
+order: 4
+---
+
+Two distinct lab redesign approaches are documented here, each emerging from the same underlying philosophy: students learn physics by doing physics, not by following instructions.
+
+Traditional labs tell students what to do, what to measure, and what to conclude. The labs below ask students to figure things out — with the instructor as a designer of the conditions for discovery, not a provider of answers.
+
+## Discovery Labs
+
+**Course:** PHYS 104 & PHYS 295 · **Format:** Minimal instruction, single objective
+
+### The philosophy
+
+A discovery lab gives students one goal and minimal scaffolding, then gets out of the way. The productive struggle that follows — the flustered conversations, the dead ends, the moments of sudden clarity — is the learning. It cannot be replicated by watching a demonstration or reading a textbook.
+
+The instructor's role shifts entirely: from information-deliverer to environment-designer. The lab is a carefully constructed situation where the right question will eventually become obvious, if students are willing to sit with the discomfort long enough.
+
+### Example 1 — The Foucault's Pendulum problem (PHYS 104)
+
+Students were shown a short video of the Foucault's Pendulum in the Panthéon in Paris — one of the most famous demonstrations of Earth's rotation — and given a small pendulum apparatus. The objective was stated simply:
+
+> "Using this apparatus and the video, determine the length and mass of the Foucault Pendulum."
+
+No equations were provided. No procedure. No hint about which variables mattered.
+
+What followed was exactly what was hoped for: students began talking to each other, debating which variables to test first. They gathered data on mass, length, and initial angle. They noticed that changing the mass didn't change the period. A question emerged organically from their own data: *"Why doesn't mass matter?"*
+
+That question — arising from their investigation rather than from the instructor — is worth more than any lecture on simple harmonic motion. Students produced a graph to predict properties of the Panthéon pendulum, compared theoretical predictions with the video, and reflected on the limits of their model.
+
+### Example 2 — The standing waves & room temperature problem (PHYS 104)
+
+Students were given the standard apparatus for standing waves in air columns — no instruction, no procedure — and asked to determine the temperature of the room.
+
+This forced them to connect what they knew about resonance in air columns to the speed of sound, and the speed of sound to temperature — a chain of reasoning that only works if you understand each link. Students had to revisit their notes independently, figure out which relationships were relevant, and design a procedure to extract a temperature measurement from acoustic resonance data.
+
+Bonus points were awarded for reporting results with proper uncertainty (requiring multiple trials) and verifying results a second way — using a different resonance mode or cross-checking with a thermometer. The verification requirement introduced the idea of consistency checks, a core practice in experimental physics that rarely appears in cookbook labs.
+
+### Example 3 — Diffraction & the laser frequency problem (PHYS 295)
+
+Students were given a He-Ne laser, a Cornell Interference & Diffraction Set, a metre stick, and a screen. The objective:
+
+> "Determine the frequency of the laser with uncertainty. Compare your result to the known value by consistency check."
+
+No prescribed procedure. The key design tension was built into the apparatus itself: students had multiple slit arrangements available — double slits and diffraction gratings with different spacings and slit counts — and had to *decide* which measurements to make and why, with the sub-objective explicitly stated as: **make choices that decrease your error and uncertainty.**
+
+This forced students to think about measurement precision before measuring — a sophisticated experimental reasoning skill. The lab report required students to identify *which specific aspect of their procedure or apparatus* caused any discrepancy, and to use their own data as evidence. Not "human error" — a specific, identified, quantified culprit.
+
+### What discovery labs produce
+
+Students leave these sessions having done real scientific reasoning:
+
+- Formulated their own approach to an open problem
+- Made decisions about which variables to control and why
+- Interpreted ambiguous or imprecise data
+- Experienced the genuine satisfaction of figuring something out
+
+They also leave with a more accurate picture of what science actually is — not a process of confirming expected answers, but a process of constructing understanding from imperfect observations.
+
+## The Customized Lab: The Arm as a Lever (PHYS 104)
+
+**Course:** PHYS 104 (section with high biology/medicine interest) · **Context:** Torque & Static Equilibrium unit
+
+### Why this lab exists
+
+A standard torque and equilibrium lab typically involves a metre stick, hanging masses, and a pivot — sufficient physics, but zero relevance to the lives of most students. For a section of PHYS 104 with a significant number of students heading into medicine, nursing, kinesiology, and biology, this felt like a missed opportunity.
+
+The question was: could the same physics — second condition of equilibrium, torque, lever systems — be taught through a context that these students would find genuinely fascinating?
+
+The answer was the forearm.
+
+### What students did
+
+Students modelled their own forearm as a Class III biological lever in static rotational equilibrium. Using their own anatomical measurements, they:
+
+- Measured the length of their forearm, located their bicep tendon insertion point (roughly 4–6 cm from the elbow), and estimated their forearm mass from body weight
+- **Predicted** the force the bicep must exert to hold a static load at 90 degrees — theoretically, using the torque equilibrium equation
+- **Measured** this force experimentally using a spring scale positioned at the bicep insertion point
+- Compared theoretical and experimental values across six load trials, plotted experimental force against theoretical force, and evaluated consistency
+
+### What made it surprising
+
+The result is counterintuitive in a way that sticks: the bicep must exert a force **many times larger** than the load it supports — not a design flaw, but an evolutionary adaptation that trades mechanical force for speed and range of motion. Students who expected the muscle force to be smaller than the load were surprised, and that surprise is pedagogically valuable.
+
+The discussion questions pushed further: mechanical advantage of the forearm, velocity ratio, comparison with other lever classes in the body (calf raise, skull nodding, cheetah vs. elephant limb), evolutionary justification for this seemingly "inefficient" design, and a bonus question on muscle cross-sectional area and safety factors built into human physiology.
+
+This is physics, biomechanics, evolutionary biology, and kinesiology in a single lab session — all grounded in data the students collected from their own bodies.
+
+### Lab report structure
+
+The lab followed a standard format with full uncertainty analysis: theoretical prediction vs. experimental measurement across six trials, percent difference calculation, a graphical consistency check, discussion questions requiring qualitative reasoning about biological design, and a comparison of lever classes across vertebrate anatomy.
+
+## Design process & AI's role
+
+### Discovery labs
+
+The discovery lab format requires no AI to run — the design insight is pedagogical: withhold procedure, preserve objective, create conditions for productive struggle. Claude was used to brainstorm resonance and diffraction lab variations and to pressure-test whether specific objectives were achievable with available apparatus.
+
+### The customized lab
+
+The Arm as a Lever lab is a direct example of AI as design collaborator:
+
+1. **Brainstorming:** Claude was used to generate candidate lab ideas for a torque unit that would resonate with a biology/medicine-focused cohort. Several ideas were generated; the forearm lever was selected as the most doable with available apparatus and the most pedagogically rich.
+2. **Drafting:** Once the concept was chosen and the experiment described, Claude wrote the full student-facing lab instructions — including the theory section, notation table, procedure, data tables, and discussion questions.
+3. **Review & refinement:** I reviewed and refined the output for physical accuracy, appropriate difficulty level, and alignment with course learning outcomes. The evolutionary discussion questions were particularly developed through iteration.
+
+The result is a lab that would have taken many hours to produce from scratch, completed in a fraction of the time — with the instructor's expertise applied where it matters most: deciding what to teach and verifying that the science is right.
+
+## Transferable skills demonstrated
+
+This project demonstrates inquiry-based and discovery learning design, open-ended lab design with embedded assessment, and context-sensitive curriculum customization for specific learner populations. The AI-as-design-collaborator workflow — brainstorm, draft, expert review and refinement — is the transferable model: AI compresses the time from blank page to working draft; the instructor's expertise determines what to build and verifies that it's right.

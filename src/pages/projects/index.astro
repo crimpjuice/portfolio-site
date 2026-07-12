@@ -1,0 +1,118 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+
+// Build the filter list from the categories actually in use, in a fixed order.
+const categoryOrder = [
+  'Tutoring',
+  'Curriculum Design',
+  'Assessment',
+  'Feedback Automation',
+  'Teacher Tools',
+];
+const categories = categoryOrder.filter((c) => projects.some((p) => p.data.category === c));
+---
+
+<Base
+  title="Projects"
+  description="Case studies in learning systems design: AI tutors, lab redesigns, feedback automation, and assessment frameworks — each with documented design decisions and evidence."
+>
+  <section class="wrap">
+    <header class="pagehead">
+      <p class="eyebrow">Projects &amp; case studies</p>
+      <h1>Built for a human problem. Measured against it.</h1>
+      <p class="lede">
+        Each project here started from a clearly defined human problem: a student who couldn't get
+        unstuck, a lecture format that wasn't working, a faculty member who needed a concrete
+        workflow. The case studies document the design thinking, the tradeoffs, and — where
+        possible — what changed for real people.
+      </p>
+    </header>
+
+    <div class="filters" role="group" aria-label="Filter projects by category">
+      <button class="filterbtn active" data-cat="all">All</button>
+      {categories.map((cat) => <button class="filterbtn" data-cat={cat}>{cat}</button>)}
+    </div>
+
+    <div class="cardgrid">
+      {projects.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .pagehead {
+    padding: clamp(48px, 7vw, 80px) 0 clamp(32px, 4vw, 44px);
+    max-width: 62ch;
+  }
+
+  .pagehead h1 {
+    font-size: clamp(2rem, 1.5rem + 2.2vw, 3rem);
+    line-height: 1.1;
+    margin-top: 14px;
+  }
+
+  .lede {
+    margin-top: 16px;
+    color: var(--ink-soft);
+  }
+
+  .filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  .filterbtn {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.03em;
+    padding: 7px 14px;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    background: transparent;
+    color: var(--ink-soft);
+    cursor: pointer;
+  }
+
+  .filterbtn:hover {
+    color: var(--ink);
+    border-color: var(--ink-soft);
+  }
+
+  .filterbtn.active {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  .cardgrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin-bottom: clamp(48px, 7vw, 88px);
+  }
+</style>
+
+<script>
+  // Category filter: show only cards whose data-category matches.
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.filterbtn');
+  const cards = document.querySelectorAll<HTMLElement>('.cardgrid [data-category]');
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      buttons.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.dataset.cat;
+      cards.forEach((card) => {
+        card.style.display = cat === 'all' || card.dataset.category === cat ? '' : 'none';
+      });
+    });
+  });
+</script>

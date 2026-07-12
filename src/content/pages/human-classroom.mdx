@@ -1,0 +1,134 @@
+---
+title: The Human Classroom
+eyebrow: The classroom redesign
+lede: What AI actually makes possible, and what I've been building toward.
+description: A physics classroom rebuilt from first principles around productive struggle, collaboration, and curiosity — with AI clearing the space for all three.
+---
+
+import TwoLayerModel from '../../components/TwoLayerModel.astro';
+
+The conversation about AI and education is almost always about AI: which tools to use, which to ban, how to detect misuse, how to redesign assessments so students can't cheat. These are real questions. The more generative one is this: **what does AI make newly possible in the classroom, for humans?**
+
+I've spent the last year redesigning my physics courses, not because AI forced me to, but because AI gave me something I didn't have before: time, diagnostic intelligence, and the ability to customize at scale. Those three things, freed up and redirected, made it possible to build a classroom I'd always wanted but couldn't afford to run. One built entirely around the experiences that produce genuine, lasting learning — which happen to be irreducibly human.
+
+This page is an attempt to describe that classroom, explain the thinking behind it, and share what I've noticed since making the shift.
+
+## The Two-Layer Model
+
+Everything I've built in the last year sits on one of two layers. Most of my portfolio documents Layer 1. This page is about Layer 2.
+
+<TwoLayerModel />
+
+The relationship between the two layers is causal.
+
+> AI doesn't improve education by doing education. It improves education by clearing the space for education to happen.
+
+## What humans are actually for
+
+Here's the premise underneath all of this.
+
+The human capacities that make for deep learning — curiosity, awe, collaborative sense-making, being moved by mystery, caring about story, working through real difficulty with other people — are not modern pedagogical innovations. They are evolutionary. They are the cognitive and social machinery our species developed over hundreds of thousands of years to survive, cooperate, and make meaning. They are ancient, they are robust, and they will not be automated.
+
+This isn't a philosophical position in search of evidence. It's a description of what the research has been saying for decades, across multiple independent research traditions.
+
+**On curiosity:** Gruber, Gelman, and Ranganath (2014, *Neuron*) used fMRI to show that curiosity activates the brain's dopaminergic reward circuit and hippocampal memory systems, producing better retention not just for the content of interest but for incidental material encountered in the same state. The brain in a curious state is a more effective learning machine, at a neurological level.
+
+**On relevance and personal meaning:** Ryan and Deci's Self-Determination Theory, backed by a meta-analysis of over 200,000 students across 344 samples (Howard et al., 2021), shows that intrinsic motivation and perceived personal relevance are among the strongest predictors of persistence and academic success across educational levels and cultural contexts. Students who understand why something matters to them learn more and stay longer.
+
+**On interest:** Hidi and Renninger's four-phase model of interest development shows that situational interest, triggered by features of the learning environment, can develop into durable individual interest over time. Interest is not fixed. It responds to design.
+
+**On collaboration:** Vygotsky's foundational work on the zone of proximal development, extended by contemporary collaborative learning research, consistently shows that learning through dialogue with peers produces qualitatively richer outcomes than solo work, and that motivation itself is socially negotiated. Students working alongside others who are also genuinely struggling develop different kinds of persistence than students working alone.
+
+**On productive difficulty:** Bjork and Bjork's desirable difficulties framework (1994) and Kapur's productive failure research (2008) demonstrate that struggle and friction, when well-designed, produce stronger long-term retention and transfer than instruction that removes challenge. Students who first attempt a problem they don't yet know how to solve, then receive instruction, significantly outperform students who receive instruction first.
+
+The traditional lecture-based classroom was never really designed around these capacities. It was designed around the constraints of scale: one expert, many students, limited time, finite resources. Those constraints produced a delivery model — content flows from instructor to student — that's actually a poor fit for how human minds build understanding.
+
+AI removes many of those constraints. The research has always known what works. The constraint has always been the instructor's time and cognitive bandwidth. When you ask what to do with the space AI opens up, the answer follows directly from the evidence. You build toward the experiences humans are built for.
+
+I think of these as clustering into three groups:
+
+**The drive to know:** curiosity, awe, and the love of mystery. Being motivated by questions rather than answers. Finding not-knowing productive rather than threatening. The capacity to be genuinely surprised by how the world works.
+
+**The capacity for meaning:** aesthetic response to elegance and pattern, narrative sense (needing a human story in the learning experience), and wonder at complexity. The ability to care about a problem that doesn't have a clean answer. The pride that comes from becoming genuinely good at something.
+
+**The social mind:** genuine collaborative sense-making, the particular persistence that comes from struggling alongside other people, and the experience of being inspired by a person in the room in a way a screen cannot replicate. The grit that builds when difficulty is shared rather than faced alone.
+
+A well-designed classroom in the age of AI is one that runs all three clusters simultaneously. As it turns out, this isn't a utopian vision. It's a design problem. And it's solvable.
+
+## What this looks like in practice
+
+These are the specific changes I've made to PHYS 104 this year, and the principle each one is designed to activate.
+
+### Flipped classroom structure
+
+Students engage with core content before class — short videos, readings — so that class time is entirely freed for active work. The instructor's role in the room shifts from deliverer to designer of experience and diagnostician of confusion. This is the structural prerequisite for everything else on this list.
+
+### Interactive problem sets with built-in friction
+
+Problems are open-ended, often deliberately underspecified. Students must decide what they need to know, identify what's missing, and develop a procedure before solving. This mirrors the scientific method as a *practice*, not a topic. The discomfort of an underspecified problem is the point — it's where the thinking actually happens.
+
+### Physical demo integration
+
+Some problems are linked directly to physical demonstrations in the room. Students must engage with the demo — make a prediction, observe, reconcile — before they can complete the problem. Physics stops being abstract notation and becomes something you can see, touch, and be surprised by.
+
+### Peer instruction and group work
+
+Structured group activities targeting collaboration, not just efficiency. Students explain their reasoning to each other, argue about approaches, and build understanding through dialogue. The social experience of working through something difficult together is not a soft add-on — it's a primary learning mechanism.
+
+### Interest-based problem customization
+
+Using AI to generate problem variants tailored to learner interests: same physics, different context. A student interested in music gets wave problems set in acoustics. A student interested in sports gets projectile problems in athletic contexts. This isn't a motivational trick. Hidi and Renninger's interest research shows that situational interest, triggered by relevant context, reduces extraneous cognitive load and increases genuine engagement. It also signals to students that their interests were worth asking about, which matters for the trust that makes a classroom work.
+
+### AI-assisted student grouping
+
+Students submit short interest and personality surveys at the start of term. AI helps identify clusters of shared interests, strengths, and working styles for group formation. Groups built around common curiosity sustain more genuine collaborative conversation than randomly assigned ones. Survey samples are available on request.
+
+### Real-time misconception response
+
+When I spot a persistent misconception during a flipped class, I build an interactive HTML lesson to address it — sometimes the same day. AI accelerates the build time dramatically. The intervention is targeted, immediate, and designed around the specific error pattern I observed, not a generic review.
+
+### The Productive Struggle grade
+
+15% of the final grade, assessed weekly through a short self-reflection submitted on D2L. Students score themselves on persistence, contribution to group thinking, revision of understanding, and willingness to attempt hard problems without knowing where to start. The grade is weighted toward later weeks — growth matters more than starting position. The lowest week is dropped. Instructor calibration is light.
+
+This component does something the other components can't: it makes the disposition toward difficulty visible, valued, and rewarded. Bjork and Bjork's desirable difficulties research shows that the conditions that feel most uncomfortable in the short term — attempting a hard problem without knowing the answer, sitting with confusion, revising a wrong model — produce the strongest long-term retention and transfer. Kapur's productive failure work extends this further: students who struggle before instruction significantly outperform students who receive instruction first, on both conceptual understanding and transfer. The Productive Struggle grade is the structural acknowledgment that this discomfort is the point, not a sign that something has gone wrong.
+
+The full rubric and self-assessment instrument are on [the Productive Struggle Score page](/productive-struggle/).
+
+## What I've noticed, and what I've measured
+
+This is early. One semester is not a controlled study, and I'm not claiming it as one. What I can say is that I tracked specific signals across the term: survey responses, attendance, office hours question patterns, test score progressions from unit to unit, and weekly self-reflections. The patterns are consistent enough to be worth reporting honestly.
+
+**Better questions.** Students are asking about edge cases, exceptions, and connections between concepts. These are the questions that signal genuine engagement rather than confusion about procedure.
+
+**Tighter misconceptions.** The errors I'm seeing are more sophisticated. Students aren't making elementary mistakes; they're making the subtle errors that indicate they've built a mental model and are testing its limits.
+
+**More socialization around the work.** Students are talking to each other about physics outside of structured group time: comparing approaches, debating, asking each other questions.
+
+**Stronger attendance.** Students come back to a room where something is happening with other people. They're less likely to skip a class that involves an experience they'll miss, as opposed to content they can catch up on asynchronously.
+
+**Improved test scores across the term.** Pre-test review sessions built around tracked misconceptions, combined with post-test reflections, have produced measurable score improvements from unit to unit. Score comparison data is available on request.
+
+**Richer office hours.** The questions I'm being asked have shifted from "how do I do this problem" toward "I understand the method but I don't understand why this works." That's the shift from procedure to understanding.
+
+## What this system does to academic integrity
+
+Academic integrity problems are almost always motivation problems in disguise. Students cheat when effort feels disconnected from meaning: when the content doesn't connect to anything they care about, when assessments reward output over process, when the path of least resistance leads away from genuine engagement. AI hasn't created that problem. It's made the exit door bigger.
+
+The design decisions described on this page close that door, not through enforcement, but through structure. When a student feels genuinely seen on day one, when their problem sets connect to their actual interests and goals, when 15% of their grade rewards honest effort regardless of correctness, and when the AI tutor in their pocket asks them to reason rather than delivering answers, cheating becomes structurally less appealing at every layer.
+
+The deeper finding is this: the interventions that reduce academic dishonesty and the interventions that improve engagement, attendance, and retention are the same interventions. Students who feel connected to their reasons for being in a course don't just cheat less. They show up. They ask better questions. They stay enrolled.
+
+That convergence matters institutionally, not just pedagogically. The design work and the retention work are the same work.
+
+The full framework is documented in [Academic Integrity as a Design Problem](/projects/academic-integrity/).
+
+## The new role of the educator
+
+None of what I've described above is something AI can do. AI can generate problems, provide patient scaffolding, give immediate feedback, and free up the instructor's time and cognitive load. It cannot design the experience of learning, be present when a student has their first real moment of physical intuition, or be the human voice that makes a student feel the stakes of an interesting question.
+
+The educator's role in the age of AI is to become, more fully and more intentionally, the thing only a human in a room can be: the designer of experiences, the holder of standards, the person who makes curiosity feel contagious and difficulty feel worthwhile.
+
+That's what I'm trying to build. This portfolio documents the attempt.
+
+*Interested in any of these approaches? See the [resources for colleagues](/for-colleagues/), or [reach out directly](/contact/).*

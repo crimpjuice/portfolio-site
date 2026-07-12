@@ -1,0 +1,99 @@
+---
+title: 'Interactive Mini-Lessons: Intuition Building'
+category: Curriculum Design
+summary: Evidence-based interactive lessons that build a felt sense of a concept before formal treatment — so the mathematics has something to attach to.
+outcomes: Students arrived at formal problem-solving with stronger conceptual grounding. Conceptual quiz performance improved on items requiring qualitative reasoning.
+tools: [Claude]
+order: 6
+demos:
+  - label: 'Demo: Road to Ampère''s Law'
+    url: 'https://ampereslaw-intuition.netlify.app/'
+---
+
+> **Deployment:** These lessons were built as standalone HTML files and embedded directly into D2L/Brightspace via SCORM packaging. Students accessed them within the LMS — no external link, no separate login. Completion tracking and time-on-task data were captured automatically through D2L's engagement analytics, providing the iteration data described below.
+
+## The design problem
+
+Most physics students can manipulate equations before they understand what those equations mean. They can solve for velocity without having any intuitive feel for what makes something fast or slow. This produces fragile knowledge: students who can pass a calculation but fail the moment a problem is framed differently.
+
+Intuition-building mini-lessons target the gap *before* formal instruction: building a mental model first, so that the mathematics has something to attach to.
+
+## Design principles
+
+### Concrete before abstract — always
+
+Every intuition-building lesson starts with a concrete, manipulable situation — a slider the student can drag, a scenario they recognize, a prediction they're asked to make before seeing the answer. The formalism comes only after the student has a felt sense of the phenomenon. This sequencing is grounded in Mayer's multimedia learning principles and reduces the extraneous cognitive load of encountering abstraction cold.
+
+### Prediction before explanation
+
+Students are prompted to predict what will happen before any content is revealed. This activates prior knowledge, creates a genuine knowledge gap (curiosity), and makes the subsequent explanation meaningful rather than passive. Wrong predictions are especially valuable — they surface the exact misconception the lesson is designed to address.
+
+### Visual and interactive over text-heavy
+
+Intuition is built through experience, not reading. Lessons use interactive simulations, animated diagrams, and immediate feedback loops rather than paragraphs of explanation. Text is used minimally — to frame, not to teach.
+
+## Structure of a typical lesson
+
+1. **Grounding scenario** — a real-world situation the student can relate to
+2. **Prediction prompt** — what do you think will happen?
+3. **Interactive exploration** — manipulate variables, observe results
+4. **Guided reflection** — what pattern did you notice?
+5. **Conceptual bridge** — connecting the experience to the formal concept
+6. **Transfer check** — can you apply the intuition to a new situation?
+
+## Evidence of impact
+
+> Students reported greater confidence approaching formal problem-solving after completing intuition-building activities. Conceptual quiz performance improved on items requiring qualitative reasoning — the type of question that exposes whether a student truly understands or is pattern-matching.
+
+## The prompt behind the demo
+
+This is the reusable prompt template used to generate the Ampère's Law demo — written to be subject-agnostic, so any instructor can adapt it.
+
+<details>
+<summary>View the mini-lesson generation prompt</summary>
+
+```text
+I'm a [subject] instructor teaching [topic] and I'd like an interactive
+mini-lesson that builds intuition for it from the ground up.
+
+Pedagogical approach: Walk students through the cognitive steps that make
+[topic] feel like a natural conclusion rather than a rule handed down from
+above. Start from something visually obvious and simple, then layer in
+complexity until the full concept emerges.
+
+Suggested outline (feel free to improve this):
+[First intuitive building block — something students already understand]
+[Second step — extend or complicate it slightly]
+[Third step — introduce the key physical/mathematical object]
+[Fourth step — show what happens in the ideal/symmetric case]
+[Fifth step — reveal the general result]
+
+Design requirements:
+- Each module should be sequentially unlocked — students must complete
+  one before seeing the next
+- Every module needs a "Think About It" prompt (a lightweight question
+  students can reveal a hint for — low-stakes, get-you-thinking style)
+- Every module ends with a Key Insight callout before the unlock button
+- Heavy use of interactive sliders — students manipulate parameters and
+  see results update live on canvas
+- Color coding should be consistent throughout (define your scheme:
+  e.g. field vectors in blue, path elements in gold, positive
+  contributions in green, negative in red)
+- Minimal text — the visuals carry the argument
+- A sticky progress bar with module indicators at the top
+- The final module should display the complete formal statement of [topic]
+- Output as a single self-contained HTML file I can open in any browser
+  (no dependencies, no server needed)
+
+Notation: [list any notation preferences, e.g. "use dl not ds",
+"write mu-zero with the proper symbol", "use SI units throughout"]
+
+Please brainstorm and share a full module outline first before building,
+so I can give feedback.
+```
+
+</details>
+
+## Transferable skills demonstrated
+
+This project demonstrates sequenced instructional design (concrete to abstract), interactive HTML content development, and applied multimedia learning and cognitive load principles. The intuition-first sequencing strategy is subject-agnostic and transfers to any domain where learners encounter formal systems — mathematical, legal, financial, technical — before they have a felt sense of what those systems describe.

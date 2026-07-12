@@ -1,0 +1,94 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="Contact"
+  description="Get in touch with Jim Miszaniec about instructional design, EdTech, corporate L&D, or faculty AI integration."
+>
+  <section class="wrap">
+    <header class="pagehead">
+      <p class="eyebrow">Contact &amp; collaborate</p>
+      <h1>The best way to reach me is by email.</h1>
+      <p class="lede">
+        I'm happy to share more about any of the projects in this portfolio, discuss how my work
+        might apply to your context, or simply connect with others working at the intersection of
+        learning science and AI.
+      </p>
+      <div class="ctarow">
+        <a class="btn solid" href="mailto:jmmiszan@gmail.com">jmmiszan@gmail.com</a>
+        <a class="btn" href="mailto:MiszaniecJ@camosun.ca">MiszaniecJ@camosun.ca</a>
+      </div>
+      <p class="loc">Victoria, BC, Canada</p>
+    </header>
+
+    <div class="topics reveal">
+      <p class="topiclabel">Open to conversations about</p>
+      <ul>
+        <li>Instructional design and learning architecture roles</li>
+        <li>EdTech content, curriculum, and product opportunities</li>
+        <li>Corporate L&amp;D and customer enablement</li>
+        <li>Fintech onboarding and learning enablement</li>
+        <li>Faculty AI integration collaboration at Camosun or beyond</li>
+        <li>Consulting, advisory, or project-based work</li>
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .pagehead {
+    padding: clamp(48px, 7vw, 80px) 0 clamp(32px, 4vw, 48px);
+    max-width: 58ch;
+  }
+
+  .pagehead h1 {
+    font-size: clamp(2rem, 1.5rem + 2.2vw, 3rem);
+    line-height: 1.1;
+    margin-top: 14px;
+  }
+
+  .lede {
+    margin-top: 16px;
+    color: var(--ink-soft);
+  }
+
+  .ctarow {
+    margin-top: 28px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .loc {
+    margin-top: 20px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--ink-faint);
+  }
+
+  .topics {
+    border-top: 1px solid var(--rule);
+    padding-top: 36px;
+    max-width: 58ch;
+  }
+
+  .topiclabel {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .topics ul {
+    margin: 0;
+    padding-left: 1.3em;
+    color: var(--ink-soft);
+  }
+
+  .topics li + li {
+    margin-top: 8px;
+  }
+</style>

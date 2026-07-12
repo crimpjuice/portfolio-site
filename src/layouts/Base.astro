@@ -1,0 +1,88 @@
+---
+// The shared shell for every page: fonts, meta tags, header, footer,
+// theme handling, and the scroll-reveal observer.
+import '@fontsource/newsreader/500.css';
+import '@fontsource/newsreader/600.css';
+import '@fontsource/newsreader/500-italic.css';
+import '@fontsource/ibm-plex-sans/400.css';
+import '@fontsource/ibm-plex-sans/500.css';
+import '@fontsource/ibm-plex-sans/600.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = 'Jim Miszaniec — Learning Systems Designer. I build things that teach people how to think, and measure whether they work.',
+} = Astro.props;
+
+const fullTitle =
+  title === 'Home' ? 'Jim Miszaniec — Learning Systems Designer' : `${title} — Jim Miszaniec`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <script is:inline>
+      // Runs before paint so the page never flashes the wrong theme.
+      // Saved preference wins; otherwise follow the operating system.
+      (function () {
+        var saved = localStorage.getItem('theme');
+        if (saved === 'dark' || saved === 'light') {
+          document.documentElement.dataset.theme = saved;
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      // Fade sections in as they enter the viewport. Reduced-motion users
+      // get everything visible immediately (handled in CSS too).
+      // threshold must stay 0: a percentage threshold never fires for elements
+      // taller than the viewport (e.g. long article bodies), leaving them invisible.
+      const els = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('in');
+                io.unobserve(entry.target);
+              }
+            }
+          },
+          { threshold: 0, rootMargin: '0px 0px -60px 0px' }
+        );
+        els.forEach((el) => io.observe(el));
+      } else {
+        els.forEach((el) => el.classList.add('in'));
+      }
+
+      // Failsafe: content must never stay hidden if the observer doesn't fire.
+      setTimeout(() => {
+        els.forEach((el) => el.classList.add('in'));
+      }, 1500);
+    </script>
+  </body>
+</html>

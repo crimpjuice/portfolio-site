@@ -1,0 +1,65 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="sitefooter">
+  <div class="wrap inner">
+    <div>
+      <p class="name">Jim Miszaniec</p>
+      <p class="tag">
+        Learning Systems Designer · AI in Education · I build things that teach people how to
+        think — and measure whether they work.
+      </p>
+    </div>
+    <div class="meta">
+      <a href="mailto:jmmiszan@gmail.com">jmmiszan@gmail.com</a>
+      <span>Victoria, BC, Canada</span>
+      <span class="live">This is a live portfolio — updated as the work evolves. © {year}</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .sitefooter {
+    border-top: 1px solid var(--rule);
+    padding: 44px 0 60px;
+    margin-top: clamp(48px, 7vw, 88px);
+  }
+
+  .inner {
+    display: flex;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .name {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+
+  .tag {
+    color: var(--ink-faint);
+    font-size: 0.85rem;
+    max-width: 44ch;
+    margin-top: 6px;
+  }
+
+  .meta {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--ink-faint);
+  }
+
+  .meta a {
+    color: var(--ink-soft);
+  }
+
+  .live {
+    margin-top: 10px;
+  }
+</style>

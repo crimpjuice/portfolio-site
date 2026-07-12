@@ -1,0 +1,94 @@
+---
+// The Two-Layer Model diagram used on The Human Classroom page.
+// Blueprint blue = the system layer, chalk ochre = the human layer —
+// the same mapping the site's whole palette is built on.
+---
+
+<figure class="layers">
+  <div class="layer layer1">
+    <div>
+      <p class="tag">Layer 1</p>
+      <p class="layertitle">AI in the instructor's hands</p>
+    </div>
+    <p class="desc">
+      Tutors, generated problem sets, real-time misconception response, interest-based grouping,
+      automated feedback. Where the tools live.
+    </p>
+  </div>
+  <div class="arrow" aria-hidden="true">&darr; makes possible &darr;</div>
+  <div class="layer layer2">
+    <div>
+      <p class="tag">Layer 2</p>
+      <p class="layertitle">The liberated classroom</p>
+    </div>
+    <p class="desc">
+      Productive struggle, genuine collaboration, curiosity-driven problems, the social experience
+      of working through something hard together. What only a human room can do.
+    </p>
+  </div>
+</figure>
+
+<style>
+  .layers {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    border: 1px solid var(--rule);
+    margin: 2em 0;
+  }
+
+  .layer {
+    padding: 22px 26px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .layer1 {
+    background: var(--accent-soft);
+  }
+
+  .layer2 {
+    background: var(--ochre-soft);
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .layer1 .tag {
+    color: var(--accent);
+  }
+
+  .layer2 .tag {
+    color: var(--ochre);
+  }
+
+  .layertitle {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 1.15rem;
+    margin-top: 4px;
+    color: var(--ink);
+  }
+
+  .desc {
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    max-width: 38ch;
+    margin: 0;
+  }
+
+  .arrow {
+    text-align: center;
+    font-family: var(--font-mono);
+    color: var(--ink-faint);
+    font-size: 0.85rem;
+    padding: 4px 0;
+  }
+</style>

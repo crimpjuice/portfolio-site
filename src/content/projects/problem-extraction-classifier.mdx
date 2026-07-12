@@ -1,0 +1,106 @@
+---
+title: Textbook Problem Extraction & Difficulty Classifier
+category: Assessment
+summary: Two connected AI workflows — extracting and re-notating problems from open textbooks to match course conventions, then classifying them by cognitive difficulty for scaffolded assignment design.
+outcomes: Rapid, course-aligned problem bank generation. Problems extracted with correct notation and organized by difficulty, enabling intentional scaffolded assignments without hours of manual curation.
+tools: [Claude]
+order: 9
+---
+
+## The problem
+
+Building a well-calibrated problem bank for a physics course is time-intensive. Open textbooks contain excellent problems, but they use varied notation, different formula conventions, and inconsistent terminology — all of which create unnecessary cognitive friction for students who have learned the material using the course's own conventions. Manual extraction, reformatting, and difficulty-rating is tedious work that shouldn't require expert physics judgment for most of it.
+
+These two workflows handle the mechanical work, leaving the instructor to make the pedagogical decisions.
+
+## Workflow 1: Problem extraction & reformatting
+
+### What it does
+
+Given a section or chapter from an open physics textbook (for example, OpenStax Physics), the AI:
+
+- Extracts problems cleanly, stripping textbook-specific formatting artifacts
+- Rewrites any formulas to match the course's notation conventions (for example, using the course's preferred symbols and forms of the kinematic equations)
+- Replaces discipline-specific terminology with the terms used in course lectures and notes
+- Formats output consistently for copy-paste into course materials or the LMS
+
+### Prompt design
+
+The prompt includes the course's formula sheet as a reference, a terminology glossary mapping textbook terms to course terms, and explicit instructions to flag any problem where reformatting would change meaning — rather than guessing. Output is LaTeX, converted to PDF via Overleaf.
+
+<details>
+<summary>View the extraction prompt (DC Circuits example)</summary>
+
+```text
+I need assistance making a problem set for my physics course (I am the
+instructor). I've attached a screenshot of the module titles for
+reference - Module 9 is on DC Circuits and I want to build a problem set
+for this module. I've also attached six files from which you will draw
+the problems from (these problems are from an open source physics
+textbook). I want you to copy WORD FOR WORD the ODD numbered problems
+only and organize them by the Physics 295 Module titles. Now, in the
+course, we actually skipped 9.5: "Parallel and Series Circuits", so you
+may simply write "Section skipped".
+
+Some of these problems have images - when you encounter an image do not
+worry - I will manually place the image in the final document. Your task
+will be to simply indicate that an image is missing with "IMAGE GOES HERE".
+
+In addition, in the attached files are the answers to the odd numbered
+questions. So it will also be your task to pair up the questions you copy
+to the corresponding answer.
+
+Now, the final output should be formatted as the first section
+"EXERCISES" followed by a section "ANSWERS". The crucial piece is that
+the Exercises are renumbered starting from 1 counting up by one, instead
+of counting up by odd numbers. The Answer key must follow.
+
+Lastly, output everything as LATEX so I can bring it over to Overleaf.
+```
+
+</details>
+
+## Workflow 2: Difficulty classification & organization
+
+### What it does
+
+Given a set of extracted problems, the AI analyzes each problem and:
+
+- Assigns a difficulty tier (Foundational / Intermediate / Advanced) based on the number of steps, concepts required, whether multi-concept integration is needed, and the presence of unfamiliar surface contexts
+- Provides a brief rationale for each classification
+- Outputs a sorted, organized problem bank ready for assignment design
+
+### How this enables better assignment design
+
+With problems organized by difficulty, assignments can be deliberately scaffolded — starting with foundational problems that build confidence, moving to intermediate items that require integration, and ending with advanced problems that challenge the strongest students. This is intentional design, not random selection.
+
+### Prompt design
+
+The prompt includes a clear definition of each difficulty tier anchored to course learning objectives, example problems at each level for calibration, and instructions to be conservative — err toward flagging borderline cases rather than misclassifying.
+
+<details>
+<summary>View the classification prompt</summary>
+
+```text
+Identify, organize, and label the attached physics problems by
+difficulty. There are three difficulty levels. Hard problems can be
+identified when they have about 70% of the following attributes: they
+rely on concepts to solve, math heavy, have data interpretation, real
+world application, hidden information and assumptions, integrate physics
+topics.
+
+Easy problems are problems that probe concepts or terminology or
+definitions or require a single calculation.
+
+Output the newly organized problems as Level 1, Level 2 and Level 3
+reflecting the increase in difficulty. Do not output any answers or
+solutions.
+
+Output as LaTeX so it can be brought over to Overleaf.
+```
+
+</details>
+
+## Transferable skills demonstrated
+
+This project demonstrates AI workflow design for content pipeline automation, prompt engineering for structured classification tasks, and assessment design with intentional difficulty scaffolding. The core workflow — extract, normalize, classify, organize — transfers to any context involving large content libraries that need to be curated, standardized, and structured for progressive learner use.

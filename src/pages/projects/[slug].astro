@@ -1,0 +1,184 @@
+---
+// The shared template for every case study. The page structure is constant —
+// Problem → Design decisions → Evidence → Transferable skills — so a reader
+// learns the shape once and can skim every project.
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { title, category, summary, outcomes, tools, demos } = entry.data;
+
+// Prev/next navigation through the gallery, in display order.
+const all = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const index = all.findIndex((p) => p.id === entry.id);
+const prev = index > 0 ? all[index - 1] : null;
+const next = index < all.length - 1 ? all[index + 1] : null;
+---
+
+<Base title={title} description={summary}>
+  <article class="wrap">
+    <header class="casehead">
+      <div class="meta">
+        <span class="cat">{category}</span>
+        <span class="chiprow">
+          {tools.map((tool) => <span class="chip">{tool}</span>)}
+        </span>
+      </div>
+      <h1>{title}</h1>
+      <p class="lede">{summary}</p>
+      {
+        demos.length > 0 && (
+          <div class="demos">
+            {demos.map((demo) => (
+              <a class="btn" href={demo.url} target="_blank" rel="noopener noreferrer">
+                {demo.label} &nearr;
+              </a>
+            ))}
+          </div>
+        )
+      }
+      <aside class="outcome">
+        <p class="outcomelabel">Outcome</p>
+        <p class="outcometext">{outcomes}</p>
+      </aside>
+    </header>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    <nav class="pn" aria-label="More case studies">
+      {
+        prev ? (
+          <a class="pnlink" href={`/projects/${prev.id}/`} rel="prev">
+            <span class="pnlabel">&larr; Previous</span>
+            <span class="pntitle">{prev.data.title}</span>
+          </a>
+        ) : (
+          <span />
+        )
+      }
+      {
+        next ? (
+          <a class="pnlink pnnext" href={`/projects/${next.id}/`} rel="next">
+            <span class="pnlabel">Next &rarr;</span>
+            <span class="pntitle">{next.data.title}</span>
+          </a>
+        ) : (
+          <span />
+        )
+      }
+    </nav>
+  </article>
+</Base>
+
+<style>
+  .casehead {
+    padding: clamp(48px, 7vw, 80px) 0 clamp(32px, 4vw, 48px);
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: clamp(32px, 4vw, 48px);
+    max-width: 72ch;
+  }
+
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .cat {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.11em;
+    color: var(--accent);
+  }
+
+  .casehead h1 {
+    font-size: clamp(1.9rem, 1.4rem + 2.2vw, 2.8rem);
+    line-height: 1.12;
+    margin-top: 16px;
+  }
+
+  .lede {
+    margin-top: 16px;
+    font-size: 1.08rem;
+    color: var(--ink-soft);
+    max-width: 62ch;
+  }
+
+  .demos {
+    margin-top: 24px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .outcome {
+    margin-top: 28px;
+    background: var(--ochre-soft);
+    border-left: 2px solid var(--ochre);
+    padding: 16px 20px;
+    max-width: 62ch;
+  }
+
+  .outcomelabel {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ochre);
+    margin-bottom: 6px;
+  }
+
+  .outcometext {
+    font-size: 0.95rem;
+    color: var(--ink);
+  }
+
+  .pn {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    margin-top: clamp(48px, 6vw, 72px);
+    padding-top: 28px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .pnlink {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-decoration: none;
+    max-width: 40ch;
+  }
+
+  .pnnext {
+    text-align: right;
+    margin-left: auto;
+  }
+
+  .pnlabel {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--ink-faint);
+  }
+
+  .pntitle {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--ink);
+  }
+
+  .pnlink:hover .pntitle {
+    color: var(--accent);
+  }
+</style>

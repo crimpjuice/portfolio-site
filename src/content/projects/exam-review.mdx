@@ -1,0 +1,169 @@
+---
+title: AI-Integrated Final Exam Review Activity
+category: Curriculum Design
+summary: A 90-minute review session rebuilt around five evidence-based study strategies, ending with a personalized artifact each student could hand to a purpose-built AI study coach.
+outcomes: Students left with a concrete, personalized summary of their own knowledge gaps — and a structured, AI-generated study plan tailored to their schedule and priorities.
+tools: [Claude, Gemini]
+featured: true
+order: 3
+demos:
+  - label: Try the review session
+    url: 'https://phys104review2026.netlify.app/'
+  - label: Try Exam Coach
+    url: 'https://gemini.google.com/gem/1xiL7kC3HBYi17iY3pjmxEJWlMhYpJhaA?usp=sharing'
+---
+
+## The problem
+
+End-of-semester review sessions are among the most pedagogically wasted hours in a physics course. The typical format — an instructor working through problems on the board while students watch — requires almost nothing of students cognitively, produces minimal durable retention, and provides no information about individual gaps. Every student gets the same review regardless of what they actually need to work on.
+
+This project redesigned the review session from the ground up as an active, structured, student-driven experience — and connected it to a custom AI study coach that translated what each student discovered about themselves into a personalized, evidence-based exam preparation strategy.
+
+## How it worked
+
+### The session (90 minutes, collaborative, in-class)
+
+Students opened a custom-built HTML page embedded directly in D2L. The interface included a live session clock, a progress bar, per-block countdown timers, and smooth transitions between five sequential blocks. Students worked in groups throughout.
+
+The five blocks, each grounded in a specific learning science strategy:
+
+| Block | Name | Strategy | Time |
+| --- | --- | --- | --- |
+| 1 | Concept Mapping | Elaborative interrogation | 20 min |
+| 2 | Formula Triage | Retrieval practice | 20 min |
+| 3 | Interleaved Problem Set | Interleaving | 35 min |
+| 4 | Muddiest Point | Formative self-assessment | 10 min |
+| 5 | Confidence Calibration | Metacognitive awareness | 5 min |
+
+**Block 1 — Concept Mapping:** Groups drew a concept map on paper connecting all major PHYS 104 topics using labeled arrows explaining *relationships*, not just listing topics. Students then reflected: which connections felt weakest? Where did they hesitate?
+
+**Block 2 — Formula Triage:** Without notes, students attempted to recall key formulas from memory and distinguish when to use similar-looking equations (Impulse-Momentum vs. Conservation of Momentum, Archimedes vs. Pascal). Formulas where the group hesitated became Block 3 targets.
+
+**Block 3 — Interleaved Problem Set:** The core block. Problems from across the full course were presented in mixed order — deliberately not grouped by topic — forcing students to first identify *which* concept applies before solving. This mirrors real exam conditions and is supported by strong evidence for improving transfer performance.
+
+**Block 4 — Muddiest Point:** Students identified and logged their single muddiest topic. Groups then tried to resolve clusters themselves first (peer teaching is a powerful retrieval mechanism) before flagging unresolved confusions for the instructor.
+
+**Block 5 — Confidence Calibration:** Students rated their confidence on each PHYS 104 topic on a 1–5 scale. These ratings fed directly into the downloadable summary.
+
+After each block, students entered a brief structured reflection into the interface: what was hard, what surprised them, what they still didn't understand.
+
+### The deliverable
+
+At the session's close, students clicked **"Download Session Summary"** — generating a plain-text file containing their name and session timestamp, block-by-block reflection notes, confidence ratings by topic, flagged muddiest points, and a reminder of the evidence-based study strategies practiced.
+
+No server, no backend, no data stored anywhere except the student's own device. A deliberate design choice: student data stays with the student.
+
+### The AI study coach
+
+Students could optionally upload their summary file to **Exam Coach** — a custom AI chatbot with a purpose-engineered system prompt. The coach:
+
+1. Read the student's summary and reflected back their weakest topics and confidence ratings
+2. Asked **all logistical questions in a single message**: physics exam date, other exams in the period, which exam felt hardest, which to prioritize, when studying could start
+3. Delivered a **complete, self-contained response** with four sections: a priority list of PHYS 104 topics ranked by urgency, a day-by-day study plan covering *all* exams (interleaved, not siloed), a formula-triage section for weak topics, and a printable checklist
+4. Signed off — explicitly designed *not* to invite continued conversation or foster dependence
+
+## Design rationale
+
+### Why these five blocks? The evidence base
+
+Each block maps to a high-effect-size strategy from cognitive science research:
+
+- **Concept Mapping (elaborative interrogation):** Forcing students to explain *why* relationships exist, not just *that* they exist, deepens encoding and surfaces misconnections.
+- **Formula Triage (retrieval practice):** Roediger & Karpicke (2006) — self-testing produces stronger long-term retention than re-reading or re-studying. Recalling without notes is the key mechanism.
+- **Interleaved Problem Set (interleaving):** Rohrer et al. — interleaved practice improves exam performance by 50–125% over blocked practice, even though it feels harder. The critical skill is recognizing *which* approach a problem requires.
+- **Muddiest Point (formative self-assessment):** Peer teaching as retrieval; explaining to a peer is one of the strongest consolidation mechanisms available.
+- **Confidence Calibration (metacognitive awareness):** Students who accurately assess their own knowledge allocate study time more effectively. Miscalibration — feeling confident in weak areas — is one of the main causes of poor exam outcomes.
+
+### Why a downloadable text file instead of server-stored data?
+
+The no-backend architecture was a deliberate design choice on multiple dimensions:
+
+- **Student data ownership:** The summary belongs to the student, stored on their device, not on a server.
+- **Zero infrastructure:** No database, no login, no API — the tool works on any device with a browser and requires no IT permissions or hosting beyond a static file server.
+- **Reliability:** No network call can fail at the moment students need it.
+- **Tangibility:** The act of downloading creates a moment of reflection — *this is what I learned about myself today* — that a server-side save would not.
+- **AI compatibility:** A plain text file is the easiest possible format to paste into any AI chatbot.
+
+### Exam Coach — prompt engineering decisions
+
+The Exam Coach prompt was engineered around one core constraint: **build a plan and send the student to execute it, not keep them in conversation.**
+
+Key prompt design choices:
+
+- Coach asks all logistical questions in a single message — no multi-turn questioning loop
+- Explicit prohibition on solving problems or tutoring content
+- All four output sections delivered in one complete response
+- Study plan covers *all* exams, not just physics — a deliberate counter to physics-only tunnel vision
+- Scheduling principles encoded directly: interleave topics, front-load demanding subjects, no subject goes untouched more than one day, final day is review only plus sleep
+- Explicit closing instruction: two sentences max, do not invite continued conversation
+- Escalation paths built in: office hours, accessible learning services — the coach knows its limits
+
+<details>
+<summary>View the full Exam Coach system prompt</summary>
+
+```text
+You are Exam Coach, a concise and direct study strategist for students in
+PHYS 104 — General College Physics 1 at Camosun College
+(Instructor: JM Miszaniec, 2026W). Your job is to read a student's
+Review Session Summary and deliver a clear, personalized study plan
+they can execute independently.
+
+YOUR ROLE AND TONE
+You are a coach, not a tutor. Be direct, clear, and brief. Skip
+hollow praise. Your job is to build a plan and send the student to
+execute it — not to keep them in conversation.
+Do not encourage the student to keep chatting with you.
+
+ON FIRST RECEIVING THE REVIEW SESSION SUMMARY
+1. Briefly reflect what you see: their weakest topics, confidence
+   ratings, and any notable session notes.
+2. Ask ALL of the following in ONE message:
+   - When is your physics final?
+   - Do you have other exams in the same period?
+   - Which exam do you think will be hardest for you?
+   - Which exam do you want to prioritize?
+   - When can you start studying?
+
+AFTER RECEIVING ALL ANSWERS — deliver four sections:
+
+SECTION 1 — PRIORITY LIST
+Rank PHYS 104 topics from most urgent to least based on confidence
+ratings (1–2 = urgent, 3 = important, 4–5 = quick review) and flagged
+muddiest points.
+
+SECTION 2 — STUDY PLAN
+Day-by-day table covering ALL exams. Scheduling principles:
+- No subject goes untouched on any given day (minimum 15–20 min)
+- Front-load cognitively demanding subjects if they fall later in exam week
+- Interleave 2–3 topics in 20–25 min blocks within each session
+- Space weak topics with growing gaps (Day 1 → Day 3 → Day 6)
+- Cap sessions at 90 minutes
+- Final day before any exam: review only, no new material, sleep
+
+SECTION 3 — FORMULA TRIAGE
+For each PHYS 104 topic rated 1–3: one "use THIS when... use THAT when..."
+comparison. Only reference formulas from the PHYS 104 formula sheet.
+
+SECTION 4 — CHECKLIST
+A printable checklist covering: planning, before each session, during
+each session, after each session, day before exam, and if stuck.
+
+CLOSING: Two sentences max. Do not invite continued conversation.
+
+NEVER DO:
+- Invite continued conversation
+- Solve problems for the student
+- Reference formulas not on the PHYS 104 formula sheet
+- Recommend or normalize cramming
+- Build a physics-only plan when other exams exist
+```
+
+</details>
+
+## Evidence of impact
+
+> Students completed the session with a concrete, personalized artifact rather than vague notes. Feedback indicated the structured format helped them identify gaps they had previously underestimated. The AI study plan gave students a clear action agenda — specific, scheduled, and grounded in what *they* said about themselves — rather than the paralysis of not knowing where to start.
+
+## Transferable skills demonstrated
+
+This project demonstrates end-to-end learning experience design across three connected components: an in-class active session, a personal diagnostic artifact, and a constrained AI coach. It also demonstrates interactive HTML development with real-time client-side data capture, prompt engineering for directive (non-open-ended) coaching, and applied cognitive science (retrieval practice, interleaving, metacognitive calibration). The no-infrastructure architecture reflects deliberate thinking about student data ownership and deployment reliability.

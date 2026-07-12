@@ -1,0 +1,74 @@
+---
+// One card in the projects gallery / featured grid.
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { title, category, summary, tools } = project.data;
+---
+
+<article class="card" data-category={category}>
+  <p class="cat">{category}</p>
+  <h3><a href={`/projects/${project.id}/`}>{title}</a></h3>
+  <p class="summary">{summary}</p>
+  <div class="chiprow">
+    {tools.map((tool) => <span class="chip">{tool}</span>)}
+  </div>
+  <span class="go" aria-hidden="true">Read case study &rarr;</span>
+</article>
+
+<style>
+  .card {
+    background: var(--paper);
+    padding: 26px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: background 0.2s ease;
+    position: relative;
+  }
+
+  .card:hover {
+    background: var(--paper-dim);
+  }
+
+  .cat {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--ink-faint);
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    line-height: 1.25;
+  }
+
+  /* The whole card is clickable via a stretched link. */
+  h3 a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  h3 a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .summary {
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    flex: 1;
+  }
+
+  .go {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--accent);
+  }
+</style>

@@ -1,0 +1,80 @@
+---
+title: Lab Report Feedback System
+category: Feedback Automation
+summary: An AI-assisted workflow for rubric-aligned, educationally useful written feedback on lab reports — cutting the time cost of high-quality feedback without sacrificing specificity.
+outcomes: Significant reduction in time spent on lab report feedback cycles. Feedback quality remained high and rubric-aligned, and the saved time went to higher-value student interactions.
+tools: [Claude]
+order: 8
+---
+
+## The problem
+
+Lab reports are among the most time-intensive feedback tasks in a physics course. A single section of 30 students, each submitting a five-to-seven-page report, represents hours of careful reading and writing — and the feedback is often repetitive across students making similar errors. The cognitive cost falls entirely on the instructor, while students receive feedback too slowly to apply it before the next lab.
+
+This workflow automates the first-draft feedback generation, freeing instructor time for the judgment calls that genuinely require a human expert.
+
+## How the workflow works
+
+1. **Rubric and common-error library prepared.** Before the semester, a structured rubric is created alongside a library of the most common errors seen in prior semesters (for example, "failure to discuss sources of systematic error," "conclusion doesn't connect to the hypothesis"). Both are provided to the AI as context.
+2. **Student submission provided.** The student's lab report (or key sections) is given to the AI alongside the rubric and error library.
+3. **AI generates first-draft feedback.** The prompt instructs the AI to score each rubric criterion, identify which common errors are present, and write specific, constructive, rubric-referenced feedback in an appropriate tone for undergraduate students.
+4. **Instructor reviews and refines.** The AI output is treated as a first draft. The instructor reads the student report alongside the generated feedback, makes corrections, adds nuance, and approves. This review typically takes a fraction of the time of writing from scratch.
+
+## Prompt design principles
+
+### Rubric-anchored, not generic
+
+The prompt is structured so that every piece of feedback must reference a specific rubric criterion. This prevents generic comments ("good work") and ensures feedback is actionable and aligned to what students are being assessed on.
+
+### A common-error library reduces hallucination risk
+
+By providing a curated list of real, observed errors, the prompt steers the AI away from inventing problems that don't exist. The AI identifies *which* of the known errors are present, rather than generating novel critique from scratch.
+
+### Tone calibration for the undergraduate context
+
+The prompt specifies the audience (undergraduate physics students, not researchers), the tone (constructive, specific, encouraging where warranted), and the length target (concise enough that students will actually read it).
+
+## The prompt
+
+<details>
+<summary>View the working prompt (buoyancy lab example)</summary>
+
+```text
+I am a physics instructor and I will be correcting several lab reports on
+buoyancy and Archimedes principle. I was hoping you could be my assistant
+throughout this task. I will double check your work. I will give you lab
+reports, Evaluation Rubric, Report Expectations and the experiment
+procedure. You will leave concise feedback in simple and plain language
+while grading elements of the report deducting only whole point values
+when needed. You will output the final feedback as bulleted list of
+comments referencing the rubric section. You will also leave a final tally
+of the score. Keep the language neutral to somewhat positive. Common
+places where students lose marks are:
+
+- Not obeying significant figures and precision in gathering their
+  measurements and final calculations. (Remember: every measurement needs
+  uncertainty to one sigfig, and the measurement precision must match the
+  sigfig precision.)
+- Not doing a consistency check to compare experiment and theoretical values
+- Not writing procedure in past tense AND bullet points
+- Not being careful about professional formatting
+- Not describing and introducing tables and graphs
+- In discussion: not identifying VALID sources of error and not digging
+  deep enough into the connection between the sources of error, the
+  theory, the procedure they followed, the final results and their
+  intertwining effects on each other
+- In discussion: not providing sufficient recommendations to changes in
+  the procedure that address the sources of error
+- In conclusion: not recapping the experiment and results with error
+
+When you're ready I will give you the first report. Do not include emojis.
+
+Here are the Report Requirements:
+[INSERT REPORT REQUIREMENTS & ELEMENTS]
+```
+
+</details>
+
+## Transferable skills demonstrated
+
+This project demonstrates AI workflow design for professional productivity, prompt engineering for structured domain-specific evaluation, and human-in-the-loop quality assurance. The workflow architecture — rubric plus error library plus AI draft plus expert review — is directly transferable to any feedback-heavy professional context: compliance review, employee performance documentation, content QA, customer communication at scale.

@@ -1,0 +1,274 @@
+---
+title: 'AI Tutors: Charger, Booster & Cal-El'
+category: Tutoring
+summary: Three purpose-built AI tutors — a Socratic problem-solving coach, an algebra practice engine, and a calculus-construction guide — plus honest engagement data on why students used them less than expected.
+outcomes: Differentiated AI support across ability levels and course levels. Key finding — voluntary chatbot engagement was lower than anticipated, and reporting that honestly reshaped the next design iteration.
+tools: [ChatGPT, Gemini, Claude]
+featured: true
+order: 1
+demos:
+  - label: Try Charger
+    url: 'https://gemini.google.com/gem/1pdjz2IzPjLi9m7L_FzomHLR1nEPRmPEV?usp=sharing'
+  - label: Try Booster
+    url: 'https://gemini.google.com/gem/1OurrGN1FjiKwSchx3npMZi1A0l_9hA4s?usp=sharing'
+  - label: Try Cal-El
+    url: 'https://gemini.google.com/gem/1cO2vf01d2IpE5mOFVvvTfzeJPqgowxPe?usp=sharing'
+---
+
+This semester I designed and deployed three distinct AI tutors, each targeting a different student need and course level. Rather than a single general-purpose tool, the suite was built on the principle that different learning problems require different instructional designs.
+
+## Charger — The Problem-Solving Coach
+
+**Course:** PHYS 104 · **Platform:** ChatGPT / Gemini
+
+### The problem
+
+Students arrived at office hours unable to articulate *where* they were stuck. They knew they couldn't solve a problem but couldn't diagnose why — making both tutoring and self-study inefficient. The solution needed to build metacognitive habits, not just deliver answers.
+
+### Design decisions
+
+#### Socratic turn-based dialogue — one question per turn, always
+
+Charger is engineered around a strict turn-based rule: exactly one question per tutor turn, then stop and wait. This is not a stylistic preference — it's a structural constraint enforced in the prompt. It forces the student to produce an answer before the tutor responds, which is the mechanism through which metacognition develops. A tutor that lectures, even briefly, removes that mechanism.
+
+#### Strategy-Outline Phase before any calculation
+
+Before any problem-solving begins, Charger presents a multiple-choice conceptual strategy question — four plausible approaches, one correct. Students must choose and justify their selection. This builds the habit of orienting conceptually before computing, which is the single most reliable marker distinguishing strong from weak physics problem-solvers.
+
+#### Classroom redesign to complement the tool
+
+Deploying an AI coach outside class required adjusting what happened *inside* class. In-class time shifted toward reasoning, communication, and peer explanation — skills the coach can't teach. The tool and the classroom became a designed system, not separate activities.
+
+<details>
+<summary>View the full Charger system prompt</summary>
+
+```text
+SYSTEM PROMPT — Physics 104 AI Tutor "Charger" (TURN-BASED VERSION)
+
+ABSOLUTE BEHAVIORAL RULE
+This is a TURN-BASED DIALOGUE, not a monologue.
+On every tutor turn: Ask exactly ONE question. Stop immediately. Wait.
+
+FIRST TUTOR TURN (MANDATORY)
+1. Briefly recap the physical situation in one sentence
+2. Restate what must be solved for
+3. Ask one Socratic starting question
+State that "we will work through the problem together."
+
+STRATEGY-OUTLINE PHASE (REQUIRED)
+Before any calculation: present one 4-option MCQ asking the student
+to choose the correct conceptual approach. Each option describes a
+plausible high-level strategy in plain language (no equations).
+One option is correct. Ask student to choose and justify. Stop.
+
+HOW YOU GUIDE A PROBLEM (INTERNAL — NEVER REVEALED)
+Privately solve the problem fully. Then guide through:
+1. Visualize the situation
+2. Identify the physics concept(s)
+3. Identify forces or quantities
+4. Assign variables to knowns/unknowns
+5. Decide what is being solved for
+6. Choose the correct equation (via 4-option MCQ in LaTeX)
+7. Solve algebraically
+8. Check units and reasonableness
+
+PICTURE REQUIREMENT
+Always ensure the student draws a diagram or FBD.
+Acknowledge you cannot see it. Proceed only after they describe it.
+
+UNITS RULE
+Always include SI units with every numerical value.
+Gently correct missing or incorrect units and ask to reconsider.
+
+EQUATIONS
+Students are not required to type equations.
+Present 4-option MCQ. One correct. LaTeX only, on its own line.
+Randomize the correct answer position.
+
+NEVER DO
+- Give the full solution
+- Ask more than one question per turn
+- Jump ahead or lecture
+- Break the turn-based rhythm
+
+If unsure what to say: ask one good question and stop.
+```
+
+</details>
+
+## Booster — The Math Foundations Coach
+
+**Course:** PHYS 104 · **Platform:** ChatGPT / Gemini
+
+### The problem
+
+A significant subset of students in introductory physics struggle not with physics concepts but with the algebra underpinning them. They can understand *what* to do but can't execute it reliably. Traditional remediation is slow, passive, and demoralizing. Booster treats algebra fluency as an athletic skill — built through rapid, structured, high-repetition practice with immediate feedback.
+
+### Design decisions
+
+#### Practice engine, not tutor — the "workout" philosophy
+
+Booster's prompt explicitly states: *if the student is not doing math, you are failing your role.* Explanations are capped at five lines. The session should feel like a workout. This is a deliberate rejection of the explanation-heavy tutoring model — the research on skill acquisition is clear that fluency requires production, not observation.
+
+#### Three entry modes: Diagnostic, Targeted, or Type Recognition
+
+Students can enter the session in three ways: request a 10-question diagnostic (all questions first, answers together — blind testing), name a specific skill for targeted training, or say nothing and get type recognition practice. Each entry mode routes to a different instructional structure, making the tool adaptive from the first message.
+
+#### Structured progression with exit gates
+
+Each topic follows: one worked example, then a batch of four problems, then two harder problems, then a two-problem exit assessment. Students cannot advance without demonstrating mastery. If they struggle, they get worked solutions and a new batch at the same difficulty — not a harder one. This enforces mastery before progression, not time-based pacing.
+
+<details>
+<summary>View the full Booster system prompt</summary>
+
+```text
+SYSTEM PROMPT — "Booster" Math Practice Coach
+
+Role: Math practice coach for first-year college physics students.
+Mission: Build rapid algebra fluency required for physics.
+Function: Guided practice engine, not a lecturer.
+Goal: Algebra fluency under time pressure.
+
+Core Philosophy:
+- Practice over explanation
+- Students must produce answers
+- Immediate diagnostic feedback
+- Short problem batches
+- Minimal guidance; increase difficulty only after success
+- If the student is not doing math, you are failing your role
+
+Allowed Topics Only:
+Distributive property · Combining like terms · Solving linear equations
+· Factoring · Solving quadratics by factoring · Solving formulas for a
+variable · Translating sentences into equations · Linear functions ·
+Systems of two linear equations · Trigonometry (sin, cos, tan, inverses)
+· Basic descriptive statistics (mean, median, range)
+Never deviate from this list.
+
+Session Initiation:
+- "I need general help" → 10-Question Diagnostic Assessment
+- Student names a skill → Targeted Topic Training
+- Nothing specific → Type Recognition
+
+Diagnostic: Output all 10 questions. Instruct student to submit all
+answers together. Blanks = need for practice. Start at weakest skill.
+
+Targeted Training:
+Step 1: One worked example (≤5 lines, vertical LaTeX)
+Step 2: Batch 1 (4 problems) — all correct → Batch 2;
+        1 wrong → feedback + Batch 2; 2+ wrong → worked solutions + new Batch 1
+Step 3: Batch 2 (2 harder) — both correct → Exit Assessment;
+        any wrong → worked solution + new Batch 2
+Step 4: Exit Assessment (2 problems) — both correct → Step 5;
+        otherwise → return to Batch 2
+Step 5: Ask if they want more practice, a break, or the next topic
+
+Formatting: Never say "incorrect." Diagnose specifically
+(e.g., "Sign error", "Distribution error"). LaTeX display mode only.
+Each step on its own line. Tone: calm, firm gym coach. No fluff.
+```
+
+</details>
+
+## Cal-El — The Calculus Physics Coach
+
+**Course:** PHYS 295 (Calculus-Based Physics) · **Platform:** ChatGPT / Gemini
+
+### The problem
+
+Calculus-based physics students can often *evaluate* integrals and derivatives but cannot *construct* them from a physical situation. They know how to solve an integral but not why that integral describes the problem in front of them. Cal-El targets this gap specifically: coaching the construction of calculus from physical reasoning, not the computation.
+
+### Design decisions
+
+#### The Calculus Gate — a silent pre-check on every problem
+
+Before responding to any problem, Cal-El silently determines whether calculus is genuinely required. If it isn't, Cal-El gives a short, kind refusal: states calculus is the wrong tool, encourages non-calculus reasoning, and stops. This is a deliberate design choice — using calculus where it isn't needed is a conceptual error, and a tutor that allows it would be teaching that error.
+
+#### The Riemann Sum Protocol — mandatory for every integral
+
+Cal-El never introduces an integral without first building it from a Riemann sum across multiple turns: identify the small physical piece, determine one piece's contribution and units, form the finite sum, take the limit idea, and only then introduce the integral as shorthand. If a student jumps straight to integral notation, Cal-El redirects: *"That's the right form — now we rebuild it from the sum it comes from."* This enforces conceptual construction over formula recall.
+
+#### Randomized correct-answer position — closes the pattern-matching loophole
+
+Every multiple-choice question in Cal-El has a randomized correct option. This is explicitly enforced in the prompt. Students cannot pattern-match their way through the session — they must reason through each question. The prompt specifies that predictable correct-answer positions constitute incorrect behavior.
+
+<details>
+<summary>View the full Cal-El system prompt</summary>
+
+```text
+SYSTEM PROMPT — Physics 295 Calculus Tutor "Cal-El" (TURN-BASED, MCQ EVERY TURN)
+
+CALCULUS GATE (SILENT — MOST IMPORTANT)
+Silently determine whether calculus is genuinely required.
+If NOT required: short kind refusal, no questions, no solution, stop.
+If required: activate tutoring protocol.
+
+ABSOLUTE TURN RULES
+Every tutor turn: brief context (1–3 sentences) + exactly ONE MCQ
+with four options + randomized correct answer + stop and wait.
+
+FIRST TURN
+Re-describe the situation · State the target · Ask one randomized MCQ.
+
+CALCULUS-ORIENTATION PHASE (REQUIRED, before any equations)
+Ask one MCQ identifying what calculus is doing:
+A) Accumulation (integral) B) Rate (derivative)
+C) Relationship (differential equation) D) Coupling (matrix)
+Randomize correct option. Stop and wait.
+
+INTEGRAL CONSTRUCTION PROTOCOL (RIEMANN SUM FIRST — MANDATORY)
+Stage 1: Choose the correct physical "piece" → MCQ → stop
+Stage 2: Contribution of one piece + units → MCQ → stop
+Stage 3: Finite sum (approximation) → MCQ → stop
+Stage 4: Limit idea (no integral notation yet) → MCQ → stop
+Stage 5: Introduce integral as shorthand for the limit → MCQ → stop
+Stage 6: Solve (only if student explicitly requests)
+
+If student jumps to integral notation:
+"That's the right form — now we rebuild it from the sum it comes from."
+Return to Stage 1.
+
+EQUATIONS POLICY
+Students don't type equations. Present 4-option MCQ in LaTeX.
+One correct. Randomize position. Stop and wait.
+
+NEVER DO
+Reveal private reasoning · Give full solutions · Lecture
+Ask non-MCQ questions · Ask >1 question per turn
+Use predictable correct-answer positions
+Skip "why calculus?" · Introduce integral without Riemann sum
+```
+
+</details>
+
+## Student engagement data & observations
+
+### What was collected
+
+A weekly opt-in survey gathered student impressions and self-reported usage of the AI tutors across the semester. The survey was somewhat optional, which limits the statistical weight of the data.
+
+### What was observed
+
+> Honest finding: voluntary AI chatbot engagement was lower than anticipated.
+
+Despite the tools being available, well-designed, and linked directly from D2L, students did not engage with the AI tutors at the rates expected. Observation and survey data pointed to a consistent pattern: when students were stuck, their first instinct was *not* to open a chatbot.
+
+Likely explanations, based on observation and student comments:
+
+- **Activation energy is real.** Opening a new tab, finding the link, and beginning a conversation with an AI requires more effort than it sounds — especially when a student is already frustrated or time-pressured.
+- **Students trust people, not tools.** Many students preferred waiting for office hours or asking a peer over using an AI, even when the AI was available immediately.
+- **The Socratic format can feel slow.** Students expecting quick answers found the turn-based Socratic approach effortful — which is by design pedagogically, but creates friction for adoption.
+- **No embedded access point.** The tutors were linked from D2L but not embedded within the moment of need (for example, immediately after a failed practice problem). Context matters for tool adoption.
+
+### Conclusions & design implications
+
+This is a genuinely valuable finding, not a failure. It informs the next iteration:
+
+1. **Embed at the point of need.** A tutor linked from a course page is less effective than one that appears immediately after a student gets a practice problem wrong. Future design should explore embedding triggers.
+2. **Consider friction-reducing entry points.** A one-click "Ask Charger about this problem" button within a gamified problem set would lower the activation energy substantially.
+3. **Chatbot does not equal universal solution.** The evidence suggests AI tutors work best as *optional, available* resources for students who are self-directed — not as a replacement for instructor or peer support for all students.
+4. **Survey design matters.** Optional surveys consistently underrepresent non-users. Future data collection should be embedded in the workflow (for example, a required end-of-session reflection question) rather than added as a separate task.
+
+## What this tells employers & colleagues
+
+Deploying a tool and measuring its actual uptake — then being honest about the gap between expectation and reality — *is* instructional design. The willingness to report what didn't work as clearly as what did is what distinguishes a practitioner from a promoter.
