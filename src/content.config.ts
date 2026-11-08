@@ -16,6 +16,7 @@ const projects = defineCollection({
       'Assessment',
       'Feedback Automation',
       'Teacher Tools',
+      'Learning Analytics',
     ]),
     // One or two sentences shown on the project card and at the top of the page.
     summary: z.string(),
