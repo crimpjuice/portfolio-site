@@ -13,15 +13,16 @@ const featured = projects
   <!-- Hero -->
   <section class="wrap hero">
     <div>
-      <p class="eyebrow">Learning Systems Designer — AI in Education</p>
+      <p class="eyebrow">Learning designer &middot; AI in learning</p>
       <h1>Everything starts from <span class="accentline">a human problem.</span></h1>
       <p class="thesis">
-        I build things that teach people how to think — and measure whether they work. AI handles
-        what doesn't require judgment, so time, attention, and presence go where only a human can.
+        I build learning that changes what people can do, then check whether it worked. I use AI
+        for the fast parts and keep the judgement calls for myself. Most of what is on this site
+        you can open and try.
       </p>
       <div class="ctarow">
-        <a class="btn solid" href="/projects/">View projects</a>
-        <a class="btn" href="/teaching-philosophy/">Read the philosophy</a>
+        <a class="btn solid" href="#open">Open the work</a>
+        <a class="btn" href="/projects/">All {projects.length} case studies</a>
       </div>
     </div>
     <svg class="diagram" viewBox="0 0 300 320" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -32,37 +33,72 @@ const featured = projects
         d="M20,260 C70,255 90,150 130,140 C170,130 190,60 220,45 C240,35 260,30 280,22"></path>
       <circle cx="280" cy="22" r="4" fill="var(--accent)"></circle>
       <text x="26" y="40" class="axislabel">retention</text>
-      <text x="180" y="308" class="axislabel">productive struggle →</text>
+      <text x="180" y="308" class="axislabel">productive struggle &rarr;</text>
     </svg>
   </section>
 
-  <!-- Two audiences -->
+  <!-- Impact strip -->
   <section class="wrap section reveal">
     <div class="section-head">
-      <span class="eyebrow">Two ways in</span>
+      <span class="eyebrow">In numbers</span>
       <div class="hrule"></div>
-      <h2>Choose the path that fits you</h2>
     </div>
-    <div class="paths">
-      <div class="path">
-        <p class="pathlabel">For collaborators &amp; employers</p>
-        <p>
-          Start with <a href="/about/">About</a> for the full picture of my background and
-          approach, then explore the <a href="/projects/">Projects Gallery</a> for case studies
-          with impact evidence. <a href="/teaching-philosophy/">Teaching Philosophy</a> and
-          <a href="/human-classroom/">The Human Classroom</a> document the design thinking
-          underneath the work.
-        </p>
+    <dl class="stats">
+      <div>
+        <dt>Learner attempts analysed at Ello to find where kids quit</dt>
+        <dd>89,000</dd>
       </div>
-      <div class="path">
-        <p class="pathlabel">For colleagues at Camosun</p>
-        <p>
-          Practical tools, guides, and workshop materials to help you integrate AI into your
-          teaching — built by a faculty member, for faculty. Head to
-          <a href="/for-colleagues/">Resources for Colleagues</a>.
-        </p>
+      <div>
+        <dt>AI-built math activities I polished that reached production or went live</dt>
+        <dd>25 of 31</dd>
       </div>
+      <div>
+        <dt>Fewer repeat support requests after I deployed an AI physics tutor</dt>
+        <dd>22%</dd>
+      </div>
+      <div>
+        <dt>Instructors who changed their course within 10 days of my workshop</dt>
+        <dd>4 of 5</dd>
+      </div>
+    </dl>
+  </section>
+
+  <!-- Open the work -->
+  <section class="wrap section reveal" id="open">
+    <div class="section-head">
+      <span class="eyebrow">Open the work</span>
+      <div class="hrule"></div>
+      <h2>Things you can try in two minutes</h2>
     </div>
+    <p class="sectionintro">
+      These are the real tools and the real prompts, as my students and colleagues use them.
+    </p>
+    <ul class="openlist">
+      <li>
+        <a href="https://gemini.google.com/gem/1pdjz2IzPjLi9m7L_FzomHLR1nEPRmPEV?usp=sharing" target="_blank" rel="noopener noreferrer">Charger, a Socratic physics tutor &nearr;</a>
+        <span>Give it a physics problem. It asks one question per turn and will not hand you the answer. <a href="/projects/ai-tutors/">Read its full prompt.</a></span>
+      </li>
+      <li>
+        <a href="https://phys104review2026.netlify.app/" target="_blank" rel="noopener noreferrer">A 90-minute exam review session &nearr;</a>
+        <span>Runs in the browser, tracks each student's gaps, and hands them to an AI study coach. <a href="/projects/exam-review/">How it was designed.</a></span>
+      </li>
+      <li>
+        <a href="https://ampereslaw-intuition.netlify.app/" target="_blank" rel="noopener noreferrer">Road to Amp&egrave;re's Law, an interactive mini-lesson &nearr;</a>
+        <span>Builds a feel for the idea before the mathematics arrives. <a href="/projects/mini-lessons-intuition/">Case study.</a></span>
+      </li>
+      <li>
+        <a href="https://heat-temp-energy-misconception.netlify.app/" target="_blank" rel="noopener noreferrer">Heat, Temperature &amp; Internal Energy &nearr;</a>
+        <span>A lesson that triggers the common wrong idea first, then makes it fail. <a href="/projects/mini-lessons-misconceptions/">Case study.</a></span>
+      </li>
+      <li>
+        <a href="/projects/lab-report-feedback/">The lab-report feedback prompt</a>
+        <span>The working prompt, published in full, and how I check every draft it writes.</span>
+      </li>
+      <li>
+        <a href="/projects/ello-polish-playbook/">The Polish Playbook</a>
+        <span>The two-hour workflow and five-part scorecard I built for a team revising AI-generated activities.</span>
+      </li>
+    </ul>
   </section>
 
   <!-- Featured projects -->
@@ -70,12 +106,12 @@ const featured = projects
     <div class="section-head">
       <span class="eyebrow">Selected work</span>
       <div class="hrule"></div>
-      <h2>Case studies</h2>
+      <h2>Start with these four</h2>
     </div>
     <p class="sectionintro">
-      Each project started from a clearly defined human problem: a student who couldn't get
-      unstuck, a lecture format that wasn't working, a faculty member who needed a concrete
-      workflow. AI was one of the materials used to address it — not the starting point.
+      How I work with AI and where my judgement mattered, what 89,000 learner attempts said about
+      why kids quit, the system I built from that, and two workshops that changed how instructors
+      teach.
     </p>
     <div class="cardgrid">
       {featured.map((project) => <ProjectCard project={project} />)}
@@ -85,30 +121,25 @@ const featured = projects
     </p>
   </section>
 
-  <!-- Impact strip -->
+  <!-- More -->
   <section class="wrap section reveal">
-    <div class="section-head">
-      <span class="eyebrow">Impact snapshot</span>
-      <div class="hrule"></div>
+    <div class="paths">
+      <div class="path">
+        <p class="pathlabel">Background</p>
+        <p>
+          <a href="/about/">About</a> has my history in one page. <a href="/teaching-philosophy/">Teaching Philosophy</a> and
+          <a href="/human-classroom/">The Human Classroom</a> explain the thinking underneath the work.
+        </p>
+      </div>
+      <div class="path">
+        <p class="pathlabel">For colleagues at Camosun</p>
+        <p>
+          Practical tools, guides, and workshop materials for bringing AI into your teaching,
+          built by a faculty member for faculty. Head to
+          <a href="/for-colleagues/">Resources for Colleagues</a>.
+        </p>
+      </div>
     </div>
-    <dl class="stats">
-      <div>
-        <dt>AI learning tools in active classroom use</dt>
-        <dd>6</dd>
-      </div>
-      <div>
-        <dt>Reduction in repeat tutor support requests</dt>
-        <dd>22%</dd>
-      </div>
-      <div>
-        <dt>Years designing STEM content at Brilliant.org</dt>
-        <dd>8</dd>
-      </div>
-      <div>
-        <dt>Faculty adoption within 10 days of PD workshop</dt>
-        <dd>80%</dd>
-      </div>
-    </dl>
   </section>
 </Base>
 
@@ -237,7 +268,7 @@ const featured = projects
   .stats dd {
     font-family: var(--font-serif);
     font-weight: 600;
-    font-size: 2.6rem;
+    font-size: 2.3rem;
     margin: 0;
     color: var(--ink);
     font-variant-numeric: tabular-nums;
@@ -256,5 +287,45 @@ const featured = projects
     gap: 6px;
     border-top: 2px solid var(--accent);
     padding-top: 14px;
+  }
+
+  .openlist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+
+  .openlist li {
+    background: var(--paper);
+    padding: 22px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .openlist li > a {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .openlist li > a:hover {
+    color: var(--accent);
+  }
+
+  .openlist span {
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+  }
+
+  .stats dd {
+    white-space: nowrap;
   }
 </style>

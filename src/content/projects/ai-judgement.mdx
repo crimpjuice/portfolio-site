@@ -1,0 +1,72 @@
+---
+title: Where My Judgement Beat the Tool
+category: Working with AI
+summary: I use AI every day to draft, diagnose and structure. This page is about the other part. Five cases where the useful thing was a decision the tool could not make, and the rules I work by now.
+outcomes: 31 AI-built math activities polished at Ello, 25 of them in production or live, each one checked by a person before it shipped. Three AI tutors and a feedback workflow at Camosun, with the working prompts published in full on this site.
+tools: [Claude, Mesa, ChatGPT, Gemini]
+featured: true
+order: 1
+demos:
+  - label: Try Charger, the physics tutor
+    url: 'https://gemini.google.com/gem/1pdjz2IzPjLi9m7L_FzomHLR1nEPRmPEV?usp=sharing'
+  - label: Open the exam review session
+    url: 'https://phys104review2026.netlify.app/'
+---
+
+At Ello, math activities were built by an AI authoring agent called Mesa. I wrote the instructions it worked from, checked what it produced, and decided what shipped. At Camosun I have built AI tutors and an AI feedback workflow for my own courses. In both places the AI did the fast part. The cases below are about the slow part.
+
+## Five cases
+
+### 1. The audit agent proposed. I decided.
+
+During a company-wide cost-reduction push at Ello, an AI audit agent went through live activities and suggested fixes. I reviewed each fix and each suggestion, then confirmed it or corrected it in production. Nothing changed for a child on the agent's say-so alone.
+
+The same rule ran through my own AI clean-up prompts. Changes were drafted, ranked by severity, and applied only after a person approved them.
+
+### 2. The picture that taught the wrong lesson
+
+Two linked activities were meant to teach one concept. Some of the visuals pulled kids toward measurement when the target skill was graphing. The fishing hooks and poles fit the pond story, and could have scared a five-year-old.
+
+I did not catch either of those. Expert reviewers did. What I changed was my process. I now check every asset against the learning objective before it goes to production, and I get an expert to look at an activity before any assets are commissioned. The full story is in [Two Math Activities, One Concept](/projects/ello-i-do-we-do/).
+
+### 3. The win I did not claim
+
+The math activities I had polished finished more often than the other math activities (a median of 49% against 43%). I reported the number, and I said plainly that the data could not credit my polish without a before-and-after or an A/B test. Activities that struggled got revised more often, and ratings only came from kids who finished. Either could explain the gap.
+
+It would have been easy to claim it. See [Why Do Kids Quit Math Activities?](/projects/ello-engagement-research/).
+
+### 4. The tutor that worked and went unused
+
+I built three AI tutors for my physics and math students. They were carefully designed and linked from the course site. Students used them less than I expected. When they were stuck, opening a chatbot was not their first move. Many preferred to wait for a person.
+
+I published that finding with the case study instead of leaving it out, and it changed what I built next. Help has to sit at the moment of need, not behind a link. See [AI Tutors](/projects/ai-tutors/).
+
+### 5. Feedback I still sign
+
+My lab report workflow has the AI write first-draft feedback against a rubric. I give it a library of real errors from past semesters, so it identifies which known errors are present instead of inventing new ones. Then I read every report next to the draft, correct it, and approve it. The prompt itself tells the AI that I will double check its work. See [Lab Report Feedback System](/projects/lab-report-feedback/).
+
+## Writing once, for people and for the AI
+
+Most of what I wrote at Ello had two readers, a person and a model.
+
+- **The revision brief.** My structured prompts for Mesa carried standing rules for how to question a young child, a story arc mapped onto the teaching beats, and asset and video briefs. The agent built from it. The art team worked from the same document. It also flagged any creative change that pulled against the learning objective.
+- **The quality checklist.** One checklist, used to diagnose an activity before the work and to score it after. Every rule cites the research behind it, so everyone revising an activity is held to the same bar. It lives in [The Polish Playbook](/projects/ello-polish-playbook/).
+- **The tutor prompt.** Charger, my physics tutor, asks exactly one question per turn and then waits. That is a rule written into the prompt. You can read the whole prompt on the [AI Tutors](/projects/ai-tutors/) page.
+
+## What I believe about these tools
+
+- **AI is quick at a first draft and poor at knowing which change matters.** Diagnose before you prompt.
+- **Two big rounds beat six small ones.** Write every change in one pass, run it, correct it once.
+- **A rule belongs in the prompt, not in my head.** If the tutor must ask one question at a time, the prompt has to say so.
+- **Give the model real errors to look for.** A list of errors I have actually seen keeps it from making up problems.
+- **Completion rate alone will mislead you.** An activity can finish well and still be the lowest rated. I score five things: start, finish, like, learn, return.
+- **"Every flag closed" is the wrong bar for shipping.** If it flows, keeps load low and hits its objective, ship it with the flags open and measure.
+- **Access is not adoption.** A good tool behind a link will sit there.
+- **Hold the tools loosely.** They change too fast to build a philosophy on any one of them.
+
+## Open the work
+
+- [Charger's full system prompt](/projects/ai-tutors/), plus live links to all three tutors
+- [The working lab-report feedback prompt](/projects/lab-report-feedback/)
+- [The 90-minute exam review session](https://phys104review2026.netlify.app/), which runs in your browser
+- [The Polish Playbook](/projects/ello-polish-playbook/), the two-hour workflow and scorecard

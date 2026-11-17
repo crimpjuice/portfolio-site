@@ -2,7 +2,7 @@ import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
 /**
- * Projects — one file per case study in src/content/projects/.
+ * Projects: one file per case study in src/content/projects/.
  * The frontmatter here is validated at build time: if a field is missing
  * or misspelled, `npm run build` tells you exactly which file and why.
  */
@@ -11,6 +11,7 @@ const projects = defineCollection({
   schema: z.object({
     title: z.string(),
     category: z.enum([
+      'Working with AI',
       'Tutoring',
       'Curriculum Design',
       'Assessment',
@@ -35,7 +36,7 @@ const projects = defineCollection({
 });
 
 /**
- * Pages — long-form pages (About, Teaching Philosophy, The Human Classroom,
+ * Pages: long-form pages (About, Teaching Philosophy, The Human Classroom,
  * For Colleagues) in src/content/pages/. Edit the .mdx file to update the page.
  */
 const pages = defineCollection({

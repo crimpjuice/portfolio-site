@@ -1,15 +1,15 @@
 ---
 title: Textbook Problem Extraction & Difficulty Classifier
 category: Assessment
-summary: Two connected AI workflows — extracting and re-notating problems from open textbooks to match course conventions, then classifying them by cognitive difficulty for scaffolded assignment design.
+summary: Two connected AI workflows. The first extracts and re-notates problems from open textbooks to match course conventions, and the second classifies them by cognitive difficulty for scaffolded assignment design.
 outcomes: Rapid, course-aligned problem bank generation. Problems extracted with correct notation and organized by difficulty, enabling intentional scaffolded assignments without hours of manual curation.
 tools: [Claude]
-order: 12
+order: 14
 ---
 
 ## The problem
 
-Building a well-calibrated problem bank for a physics course is time-intensive. Open textbooks contain excellent problems, but they use varied notation, different formula conventions, and inconsistent terminology — all of which create unnecessary cognitive friction for students who have learned the material using the course's own conventions. Manual extraction, reformatting, and difficulty-rating is tedious work that shouldn't require expert physics judgment for most of it.
+Building a well-calibrated problem bank for a physics course is time-intensive. Open textbooks contain excellent problems, but they use varied notation, different formula conventions, and inconsistent terminology, all of which create unnecessary cognitive friction for students who have learned the material using the course's own conventions. Manual extraction, reformatting, and difficulty-rating is tedious work that shouldn't require expert physics judgment for most of it.
 
 These two workflows handle the mechanical work, leaving the instructor to make the pedagogical decisions.
 
@@ -26,7 +26,7 @@ Given a section or chapter from an open physics textbook (for example, OpenStax 
 
 ### Prompt design
 
-The prompt includes the course's formula sheet as a reference, a terminology glossary mapping textbook terms to course terms, and explicit instructions to flag any problem where reformatting would change meaning — rather than guessing. Output is LaTeX, converted to PDF via Overleaf.
+The prompt includes the course's formula sheet as a reference, a terminology glossary mapping textbook terms to course terms, and explicit instructions to flag any problem where reformatting would change meaning, rather than guessing. Output is LaTeX, converted to PDF via Overleaf.
 
 <details>
 <summary>View the extraction prompt (DC Circuits example)</summary>
@@ -72,11 +72,11 @@ Given a set of extracted problems, the AI analyzes each problem and:
 
 ### How this enables better assignment design
 
-With problems organized by difficulty, assignments can be deliberately scaffolded — starting with foundational problems that build confidence, moving to intermediate items that require integration, and ending with advanced problems that challenge the strongest students. This is intentional design, not random selection.
+With problems organized by difficulty, assignments can be deliberately scaffolded, starting with foundational problems that build confidence, moving to intermediate items that require integration, and ending with advanced problems that challenge the strongest students. This is intentional design, not random selection.
 
 ### Prompt design
 
-The prompt includes a clear definition of each difficulty tier anchored to course learning objectives, example problems at each level for calibration, and instructions to be conservative — err toward flagging borderline cases rather than misclassifying.
+The prompt includes a clear definition of each difficulty tier anchored to course learning objectives, example problems at each level for calibration, and instructions to be conservative, err toward flagging borderline cases rather than misclassifying.
 
 <details>
 <summary>View the classification prompt</summary>
@@ -103,4 +103,4 @@ Output as LaTeX so it can be brought over to Overleaf.
 
 ## Transferable skills demonstrated
 
-This project demonstrates AI workflow design for content pipeline automation, prompt engineering for structured classification tasks, and assessment design with intentional difficulty scaffolding. The core workflow — extract, normalize, classify, organize — transfers to any context involving large content libraries that need to be curated, standardized, and structured for progressive learner use.
+This project demonstrates AI workflow design for content pipeline automation, prompt engineering for structured classification tasks, and assessment design with intentional difficulty scaffolding. The core workflow (extract, normalize, classify, organize) transfers to any context involving large content libraries that need to be curated, standardized, and structured for progressive learner use.

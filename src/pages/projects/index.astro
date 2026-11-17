@@ -7,6 +7,7 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
 
 // Build the filter list from the categories actually in use, in a fixed order.
 const categoryOrder = [
+  'Working with AI',
   'Tutoring',
   'Curriculum Design',
   'Assessment',
@@ -19,7 +20,7 @@ const categories = categoryOrder.filter((c) => projects.some((p) => p.data.categ
 
 <Base
   title="Projects"
-  description="Case studies in learning systems design: AI tutors, lab redesigns, feedback automation, and assessment frameworks — each with documented design decisions and evidence."
+  description="Case studies in learning systems design: AI tutors, lab redesigns, feedback automation, and assessment frameworks, each with documented design decisions and evidence."
 >
   <section class="wrap">
     <header class="pagehead">
@@ -28,8 +29,8 @@ const categories = categoryOrder.filter((c) => projects.some((p) => p.data.categ
       <p class="lede">
         Each project here started from a clearly defined human problem: a student who couldn't get
         unstuck, a lecture format that wasn't working, a faculty member who needed a concrete
-        workflow. The case studies document the design thinking, the tradeoffs, and — where
-        possible — what changed for real people.
+        workflow. The case studies document the design thinking, the tradeoffs, and, where
+        I could measure it, what changed for real people.
       </p>
     </header>
 
