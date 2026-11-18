@@ -70,12 +70,11 @@ const categories = categoryOrder.filter((c) => projects.some((p) => p.data.categ
   }
 
   .filterbtn {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.03em;
-    padding: 7px 14px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 7px 16px;
     border: 1px solid var(--rule);
-    border-radius: 2px;
+    border-radius: 999px;
     background: transparent;
     color: var(--ink-soft);
     cursor: pointer;
@@ -87,17 +86,15 @@ const categories = categoryOrder.filter((c) => projects.some((p) => p.data.categ
   }
 
   .filterbtn.active {
-    background: var(--ink);
-    color: var(--paper);
-    border-color: var(--ink);
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-color: var(--accent);
   }
 
   .cardgrid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1px;
-    background: var(--rule);
-    border: 1px solid var(--rule);
+    gap: 20px;
     margin-bottom: clamp(48px, 7vw, 88px);
   }
 </style>

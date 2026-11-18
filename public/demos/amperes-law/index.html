@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Road to Ampère's Law</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<style>
+:root{
+  --bg:#f5f7fb; --card:#ffffff; --line:#e3e8f2; --ink:#0f172a; --ink2:#334155; --mut:#64748b;
+  --B:#2563eb; --dl:#d97706; --pos:#16a34a; --neg:#dc2626; --cur:#ea580c; --acc:#7c3aed;
+  --r:18px; --shadow:0 1px 2px rgba(15,23,42,.04), 0 8px 28px rgba(15,23,42,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+.katex{font-size:1.08em}
+
+/* Header */
+.hero{background:
+  radial-gradient(900px 380px at 12% -20%, #dce8ff 0%, transparent 70%),
+  radial-gradient(800px 360px at 95% -10%, #efe4ff 0%, transparent 70%), #fff;
+  border-bottom:1px solid var(--line); padding:60px 22px 44px; text-align:center}
+.kicker{display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);background:#f3efff;padding:5px 12px;border-radius:999px}
+.hero h1{font-size:clamp(2.1rem,5.4vw,3.4rem);font-weight:800;letter-spacing:-.035em;line-height:1.1;margin-top:14px}
+.hero h1 span{background:linear-gradient(120deg,var(--B),var(--acc));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .sub{color:var(--mut);font-size:1.05rem;max-width:560px;margin:14px auto 0}
+.hero-eq{display:inline-block;margin-top:26px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:14px 34px;box-shadow:var(--shadow);font-size:1.7rem}
+.hero-eq .cap{display:block;font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin-bottom:2px}
+.legend{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+.lg{display:flex;align-items:center;gap:8px;font-size:.85rem;color:var(--ink2);background:#fff;border:1px solid var(--line);padding:5px 12px;border-radius:999px}
+.lg i{width:11px;height:11px;border-radius:50%;display:block}
+.teacher{margin-top:18px;font-size:.8rem;color:var(--mut)}
+.teacher button{background:none;border:none;color:var(--acc);font:inherit;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+
+/* Sticky nav */
+.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav-in{max-width:940px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:16px}
+.nav-title{font-weight:700;font-size:.9rem;white-space:nowrap}
+.track{flex:1;height:6px;background:#eef1f7;border-radius:9px;overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--B),var(--acc));border-radius:9px;transition:width .5s ease}
+.dots{display:flex;gap:6px}
+.dot{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--line);background:#fff;color:var(--mut);font-size:.75rem;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:default;transition:all .25s}
+.dot.open{border-color:#c4b5fd;color:var(--acc);cursor:pointer}
+.dot.cur{background:var(--acc);border-color:var(--acc);color:#fff}
+@media(max-width:620px){.nav-title{display:none}.dot{width:24px;height:24px;font-size:.7rem}}
+
+/* Modules */
+main{padding-bottom:90px}
+.mod{max-width:900px;margin:0 auto;padding:64px 20px 0;scroll-margin-top:64px;animation:rise .5s ease}
+.mod.hidden{display:none}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.mod > * + *{margin-top:18px}
+.mtag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:var(--acc);background:#f3efff;border:1px solid #e4d9ff;padding:4px 11px;border-radius:8px}
+.mod h2{font-size:clamp(1.5rem,3.4vw,2rem);font-weight:800;letter-spacing:-.025em;line-height:1.2;margin-top:10px}
+.hook{display:flex;gap:14px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:16px 20px;box-shadow:var(--shadow)}
+.hook b{flex:none;width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--B),var(--acc));color:#fff;display:flex;align-items:center;justify-content:center;font-size:1rem}
+.hook p{font-size:1.1rem;font-weight:500;color:var(--ink)}
+
+.eqhero{background:linear-gradient(180deg,#ffffff,#f6f8ff);border:1px solid #dbe3f7;border-radius:22px;padding:26px 18px 22px;text-align:center;box-shadow:var(--shadow);font-size:1.5rem;overflow-x:auto}
+.eqhero .katex-display{margin:.2em 0}
+.chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.chip{font-size:.8rem;font-weight:600;padding:4px 12px;border-radius:999px;background:#eef2ff;color:#3730a3}
+
+.prose p{color:var(--ink2);font-size:1.03rem}
+.prose p + p{margin-top:10px}
+
+.lab{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:var(--shadow)}
+.cw{background:#fbfcff}
+.cw canvas{display:block;width:100%}
+.ctrls{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px 22px;padding:18px 22px;border-top:1px solid var(--line)}
+.sl{display:flex;flex-direction:column;gap:6px}
+.sl-top{display:flex;justify-content:space-between;align-items:baseline;font-size:.85rem;font-weight:600;color:var(--ink2)}
+.sl-top output{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--acc);background:#f3efff;padding:1px 8px;border-radius:6px}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:9px;background:#e8ecf5;outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--acc);box-shadow:0 2px 6px rgba(124,58,237,.3)}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--acc)}
+.eqlive{border-top:1px solid var(--line);background:linear-gradient(180deg,#f8faff,#f3f6ff);padding:16px 18px 18px;text-align:center;font-size:1.25rem;overflow-x:auto}
+.eqlive .cap{display:block;font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin-bottom:2px}
+.eqlive .katex-display{margin:.25em 0}
+.note{font-size:.9rem;color:var(--mut);margin-top:4px}
+.note b{color:var(--ink)}
+
+.think{background:#fffbeb;border:1px solid #fde68a;border-radius:var(--r);padding:16px 20px}
+.think .lab-t{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#b45309}
+.think p{color:#422006;margin-top:4px}
+.think details{margin-top:10px}
+.think summary{cursor:pointer;font-size:.88rem;font-weight:600;color:#b45309;list-style:none}
+.think summary::before{content:'▸ ';}
+.think details[open] summary::before{content:'▾ ';}
+.think details div{margin-top:8px;color:#57534e;font-size:.95rem}
+
+.insight{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:var(--r);padding:16px 20px}
+.insight .lab-t{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#15803d}
+.insight p{color:#14532d;margin-top:4px}
+
+.next{display:inline-flex;align-items:center;gap:10px;margin-top:26px;background:linear-gradient(120deg,var(--B),var(--acc));color:#fff;border:none;border-radius:14px;padding:14px 26px;font:600 1rem 'Inter',sans-serif;cursor:pointer;box-shadow:0 8px 22px rgba(79,70,229,.28);transition:transform .2s,box-shadow .2s}
+.next:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(79,70,229,.36)}
+
+/* How-to + final */
+.howto{background:#fff;border:1px solid var(--line);border-radius:22px;padding:26px 24px;box-shadow:var(--shadow)}
+.howto h3{font-size:1.3rem;font-weight:800;letter-spacing:-.02em}
+.howto > p{color:var(--ink2);margin-top:8px}
+.steps{display:grid;gap:10px;margin-top:16px}
+.step{display:flex;gap:14px;align-items:flex-start;background:#f8faff;border:1px solid #e6ebf7;border-radius:12px;padding:12px 16px;color:var(--ink2)}
+.step b.n{flex:none;width:26px;height:26px;border-radius:50%;background:var(--acc);color:#fff;font-size:.8rem;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.exs{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:18px}
+.ex{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:#fff;display:flex;flex-direction:column}
+.ex .m{margin-top:auto!important;padding-top:8px}
+.ex h4{font-size:.95rem;font-weight:700;color:var(--B)}
+.ex p{font-size:.9rem;color:var(--ink2);margin-top:4px}
+.ex .m{text-align:center;margin-top:8px;font-size:1.05rem;overflow-x:auto}
+.ex .m .katex-display{margin:.2em 0}
+
+.final{margin-top:22px;text-align:center;border-radius:24px;padding:34px 22px;color:#fff;background:linear-gradient(135deg,#2563eb,#7c3aed);box-shadow:0 18px 40px rgba(79,70,229,.3)}
+.final .cap{font-size:.75rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;opacity:.85}
+.final .big{font-size:2.2rem;margin:6px 0 4px;overflow-x:auto}
+.final .big .katex{color:#fff}
+.final p{max-width:560px;margin:0 auto;opacity:.92}
+.final .defs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+.final .defs span{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);padding:5px 12px;border-radius:999px;font-size:.85rem}
+
+@media(max-width:620px){
+  .eqhero{font-size:1.15rem;padding:20px 10px}
+  .eqlive{font-size:.82rem;padding:14px 8px}
+  .hero-eq{font-size:1.25rem;padding:12px 20px}
+  .final .big{font-size:1.6rem}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="kicker">Interactive mini lesson</span>
+  <h1>The Road to <span>Ampère's Law</span></h1>
+  <p class="sub">Seven short steps, from a single dot product to one of the four laws of electromagnetism. Move the sliders and watch the equations change with you.</p>
+  <div class="hero-eq"><span class="cap">Where we're headed</span><div data-tex="\oint \vB\cdot\vdl = \mu_0 I_{\text{enc}}"></div></div>
+  <div class="legend">
+    <div class="lg"><i style="background:var(--B)"></i>Magnetic field B</div>
+    <div class="lg"><i style="background:var(--dl)"></i>Path element dℓ</div>
+    <div class="lg"><i style="background:var(--pos)"></i>Positive contribution</div>
+    <div class="lg"><i style="background:var(--neg)"></i>Negative contribution</div>
+    <div class="lg"><i style="background:var(--cur)"></i>Current I</div>
+  </div>
+  <p class="teacher">Instructor preview: <button onclick="unlock(7,false)">open all modules</button></p>
+</header>
+
+<nav class="nav"><div class="nav-in">
+  <span class="nav-title">Ampère's Law</span>
+  <div class="track"><div class="fill" id="pFill"></div></div>
+  <div class="dots" id="dots"></div>
+</div></nav>
+
+<main>
+
+<!-- ============ MODULE 1 ============ -->
+<section class="mod" id="mod1" data-n="1">
+  <div><span class="mtag">MODULE 1 / 7</span><h2>The dot product: how much of B goes along the path</h2></div>
+  <div class="hook"><b>?</b><p>A magnetic field can be enormous and still contribute nothing along a path. How?</p></div>
+  <div class="eqhero">
+    <div data-tex="\vB\cdot\vdl \;=\; |\vB|\,|\vdl|\cos\theta \;=\; B_{\parallel}\,d\ell"></div>
+    <div class="chips"><span class="chip">B∥ = the part of B that points along the step</span></div>
+  </div>
+  <div class="prose">
+    <p>Everything in Ampère's law is built out of one small product. Take a tiny step dℓ along some path. Now ask a simple question: how much of the field B points the same way as your step? That part is B∥ = |B| cos θ. Multiply it by the length of the step and you have B · dℓ.</p>
+  </div>
+  <div class="lab">
+    <div class="cw"><canvas id="c1" data-h="290"></canvas></div>
+    <div class="ctrls">
+      <label class="sl"><span class="sl-top">Angle θ between B and dℓ<output id="o1a"></output></span><input type="range" id="s1a" min="0" max="180" value="40"></label>
+      <label class="sl"><span class="sl-top">|B|<output id="o1B"></output></span><input type="range" id="s1B" min="0.5" max="3" step="0.1" value="2"></label>
+      <label class="sl"><span class="sl-top">|dℓ|<output id="o1d"></output></span><input type="range" id="s1d" min="0.5" max="3" step="0.1" value="1.5"></label>
+    </div>
+    <div class="eqlive"><span class="cap">With your numbers</span><div id="L1"></div></div>
+  </div>
+  <div class="think"><div class="lab-t">Think about it</div>
+    <p>At what angle is B · dℓ biggest? When is it zero? When does it go negative, and what does a negative value mean?</p>
+    <details><summary>Show answer</summary><div>Biggest at θ = 0°, when B points exactly along the step. Zero at θ = 90°: B points sideways and none of it goes along the step. Past 90°, B∥ points backward, against the step, so the product is negative. The sign tells you whether you are walking with the field or against it.</div></details>
+  </div>
+  <div class="insight"><div class="lab-t">Key insight</div>
+    <p>Only B∥, the part of B along the step, counts. A field perpendicular to the path is invisible to B · dℓ, no matter how strong it is.</p></div>
+  <button class="next" onclick="unlock(2)">Continue to Module 2 →</button>
+</section>
+
+<!-- ============ MODULE 2 ============ -->
+<section class="mod hidden" id="mod2" data-n="2">
+  <div><span class="mtag">MODULE 2 / 7</span><h2>From little steps to an integral</h2></div>
+  <div class="hook"><b>?</b><p>How do you add up a field along a curve when both the field and the direction of the curve keep changing?</p></div>
+  <div class="eqhero">
+    <div data-tex="\int_a^b \vB\cdot\vdl \;=\; \lim_{N\to\infty}\;\sum_{i=1}^{N} \textcolor{#2563eb}{\vec B_i}\cdot\Dl_i"></div>
+    <div class="chips"><span class="chip">Chop, multiply, add, then shrink the steps</span></div>
+  </div>
+  <div class="prose">
+    <p>A real path curves, and a real field changes from place to place. So we cheat a little. Chop the path into N straight steps Δℓ. On each step, pretend B is constant (use its value at the start of the step), compute B · Δℓ, and add them all up.</p>
+    <p>With a few big steps the answer is off. Make the steps smaller and the cheat gets better and better. The number the sum settles on is the line integral.</p>
+  </div>
+  <div class="lab">
+    <div class="cw"><canvas id="c2" data-h="300"></canvas></div>
+    <div class="ctrls">
+      <label class="sl"><span class="sl-top">Number of steps N<output id="o2n"></output></span><input type="range" id="s2n" min="1" max="60" value="3"></label>
+    </div>
+    <div class="eqlive"><span class="cap">With your numbers</span><div id="L2"></div><div class="note" id="N2"></div></div>
+  </div>
+  <div class="think"><div class="lab-t">Think about it</div>
+    <p>With N = 2 the sum misses badly. What exactly goes wrong with big steps?</p>
+    <details><summary>Show answer</summary><div>Two things. The straight step cuts across the curve, so its direction is wrong for most of the stretch. And B changes along the step, but we only used its value at the start. Both errors shrink as the steps shrink, so the sum closes in on one number: the integral.</div></details>
+  </div>
+  <div class="insight"><div class="lab-t">Key insight</div>
+    <p>∫ B · dℓ means: chop the path into steps so small that B and the direction are constant over each one, then add up B · dℓ for every step.</p></div>
+  <button class="next" onclick="unlock(3)">Continue to Module 3 →</button>
+</section>
+
+<!-- ============ MODULE 3 ============ -->
+<section class="mod hidden" id="mod3" data-n="3">
+  <div><span class="mtag">MODULE 3 / 7</span><h2>When B runs along the path</h2></div>
+  <div class="hook"><b>?</b><p>Is there ever a way to do a line integral with no calculus at all?</p></div>
+  <div class="eqhero">
+    <div data-tex="\int \vB\cdot\vdl \;=\; \int |\vB|\,d\ell \;=\; |\vB|\,L"></div>
+    <div class="chips"><span class="chip">Condition 1: B ∥ dℓ everywhere</span><span class="chip">Condition 2: |B| constant along the path</span></div>
+  </div>
+  <div class="prose">
+    <p>Suppose B points along the path at every point and has the same size everywhere. Then θ = 0 for every step, cos θ = 1, and every step contributes its full |B| dℓ. Adding them up is easy: |B| times the total length L. Bend the path more and it gets longer, so the integral grows.</p>
+  </div>
+  <div class="lab">
+    <div class="cw"><canvas id="c3" data-h="290"></canvas></div>
+    <div class="ctrls">
+      <label class="sl"><span class="sl-top">How far along the path<output id="o3p"></output></span><input type="range" id="s3p" min="0" max="100" value="60"></label>
+      <label class="sl"><span class="sl-top">Path height (bend)<output id="o3h"></output></span><input type="range" id="s3h" min="0" max="1.6" step="0.05" value="0.9"></label>
+    </div>
+    <div class="eqlive"><span class="cap">With your numbers (|B| = 1.5)</span><div id="L3"></div><div class="note" id="N3"></div></div>
+  </div>
+  <div class="think"><div class="lab-t">Think about it</div>
+    <p>Here bending the path always increases the integral. Would that still be true if B pointed in one fixed direction instead of following the path?</p>
+    <details><summary>Show answer</summary><div>No. With a fixed B, bending the path makes it longer, but it also tilts the steps away from B, which lowers cos θ. The two effects compete. Here B follows the path, so cos θ stays at 1 and every extra bit of length counts in full. You will see the fixed-B case next.</div></details>
+  </div>
+  <div class="insight"><div class="lab-t">Key insight</div>
+    <p>Two conditions make the integral easy: B ∥ dℓ everywhere, and |B| constant along the path. Then ∫ B · dℓ = |B| L. Hold on to these two conditions. They are the whole trick to using Ampère's law.</p></div>
+  <button class="next" onclick="unlock(4)">Continue to Module 4 →</button>
+</section>
+
+<!-- ============ MODULE 4 ============ -->
+<section class="mod hidden" id="mod4" data-n="4">
+  <div><span class="mtag">MODULE 4 / 7</span><h2>A uniform field: only the endpoints matter</h2></div>
+  <div class="hook"><b>?</b><p>Wiggle a path as wildly as you like between the same two points. Does ∫ B · dℓ change?</p></div>
+  <div class="eqhero">
+    <div data-tex="\int_A^P \vB\cdot\vdl \;=\; \vB\cdot\int_A^P \vdl \;=\; \vB\cdot\textcolor{#7c3aed}{\Delta\vec r}"></div>
+    <div class="chips"><span class="chip">True when B is uniform (same size and direction everywhere)</span></div>
+  </div>
+  <div class="prose">
+    <p>Now the opposite situation: B is the same everywhere, and the path wanders around. Green steps go with the field, red steps go against it. Because B is the same everywhere, you can pull it out of the integral. What's left, ∫ dℓ, is all the little steps added head to tail: the displacement Δr from the start A to where you are now, P. So the wiggles drop out completely.</p>
+  </div>
+  <div class="lab">
+    <div class="cw"><canvas id="c4" data-h="320"></canvas></div>
+    <div class="ctrls">
+      <label class="sl"><span class="sl-top">Direction of B<output id="o4b"></output></span><input type="range" id="s4b" min="0" max="360" value="20"></label>
+      <label class="sl"><span class="sl-top">Wiggle size<output id="o4w"></output></span><input type="range" id="s4w" min="0" max="100" value="60"></label>
+      <label class="sl"><span class="sl-top">How far along the path<output id="o4p"></output></span><input type="range" id="s4p" min="0" max="100" value="100"></label>
+    </div>
+    <div class="eqlive"><span class="cap">With your numbers (|B| = 1.5)</span><div id="L4"></div><div class="note">Same number every time, no matter how much you wiggle.</div></div>
+  </div>
+  <div class="think"><div class="lab-t">Think about it</div>
+    <p>Join the two ends to make a closed loop in this uniform field. What is ∮ B · dℓ?</p>
+    <details><summary>Show answer</summary><div>Zero. A closed loop ends where it starts, so Δr = 0. Remember this: a uniform field like this one has no current running through your loop. In two modules you will see that this is no coincidence.</div></details>
+  </div>
+  <div class="insight"><div class="lab-t">Key insight</div>
+    <p>In a uniform field, ∫ B · dℓ = B · Δr. Only the endpoints matter, and around any closed loop the answer is zero. The ∮ symbol just means "integral around a closed loop".</p></div>
+  <button class="next" onclick="unlock(5)">Continue to Module 5 →</button>
+</section>
+
+<!-- ============ MODULE 5 ============ -->
+<section class="mod hidden" id="mod5" data-n="5">
+  <div><span class="mtag">MODULE 5 / 7</span><h2>The field around a long straight wire</h2></div>
+  <div class="hook"><b>?</b><p>A current makes a field that circles around the wire. What path would line up perfectly with it?</p></div>
+  <div class="eqhero">
+    <div data-tex="|\vB| \;=\; \dfrac{\mu_0\,\textcolor{#ea580c}{I}}{2\pi r}"></div>
+    <div class="chips"><span class="chip">Direction: circles around the wire (right-hand rule)</span><span class="chip">μ₀ = 4π × 10⁻⁷ T·m/A</span></div>
+  </div>
+  <div class="prose">
+    <p>Now real physics. A long straight wire carries a current I out of the page (the dot in the middle). The field it makes runs in circles around the wire. Point your right thumb along the current and your fingers curl the way B goes: counterclockwise here. The strength falls off with distance as 1/r.</p>
+    <p>We take this formula as given for now. It comes from experiment, and later in the course you can derive it from the Biot–Savart law.</p>
+  </div>
+  <div class="lab">
+    <div class="cw"><canvas id="c5" data-h="340"></canvas></div>
+    <div class="ctrls">
+      <label class="sl"><span class="sl-top">Current I<output id="o5I"></output></span><input type="range" id="s5I" min="1" max="20" value="10"></label>
+      <label class="sl"><span class="sl-top">Loop radius r<output id="o5r"></output></span><input type="range" id="s5r" min="2" max="20" value="8"></label>
+    </div>
+    <div class="eqlive"><span class="cap">With your numbers</span><div id="L5"></div></div>
+  </div>
+  <div class="think"><div class="lab-t">Think about it</div>
+    <p>Take the dashed circle as your path. What is the angle between B and dℓ at each point? Is |B| the same all the way around?</p>
+    <details><summary>Show answer</summary><div>θ = 0 everywhere: B is tangent to the circle, exactly along dℓ. And every point on the circle is the same distance r from the wire, so |B| is the same all the way around. Both conditions from Module 3 are met.</div></details>
+  </div>
+  <div class="insight"><div class="lab-t">Key insight</div>
+    <p>Around a long straight wire, a circle centred on the wire is the perfect path: B ∥ dℓ everywhere and |B| constant. That makes the integral easy.</p></div>
+  <button class="next" onclick="unlock(6)">Continue to Module 6 →</button>
+</section>
+
+<!-- ============ MODULE 6 ============ -->
+<section class="mod hidden" id="mod6" data-n="6">
+  <div><span class="mtag">MODULE 6 / 7</span><h2>Closing the loop: the radius cancels</h2></div>
+  <div class="hook"><b>?</b><p>Move the loop farther from the wire and the field gets weaker. Does the integral get smaller?</p></div>
+  <div class="eqhero">
+    <div data-tex="\oint \vB\cdot\vdl \;=\; |\vB|\,(2\pi r) \;=\; \frac{\mu_0 I}{\cancel{2\pi r}}\;\cancel{2\pi r} \;=\; \mu_0 I"></div>
+    <div class="chips"><span class="chip">Weaker field × longer loop = same answer</span></div>
+  </div>
+  <div class="prose">
+    <p>Walk all the way around the circle. Both conditions from Module 3 hold, so the integral is |B| times the length of the path, 2πr. Now watch what happens to r.</p>
+  </div>
+  <div class="lab">
+    <div class="cw"><canvas id="c6" data-h="340"></canvas></div>
+    <div class="ctrls">
+      <label class="sl"><span class="sl-top">How far around<output id="o6p"></output></span><input type="range" id="s6p" min="0" max="100" value="40"></label>
+      <label class="sl"><span class="sl-top">Loop radius r<output id="o6r"></output></span><input type="range" id="s6r" min="2" max="20" value="8"></label>
+      <label class="sl"><span class="sl-top">Current I<output id="o6I"></output></span><input type="range" id="s6I" min="1" max="20" value="10"></label>
+    </div>
+    <div class="eqlive"><span class="cap">With your numbers</span><div id="L6"></div><div class="note" id="N6"></div></div>
+  </div>
+  <div class="think"><div class="lab-t">Think about it</div>
+    <p>Make the loop bigger. |B| gets weaker. Why doesn't the integral shrink?</p>
+    <details><summary>Show answer</summary><div>|B| falls like 1/r, but the length of the loop grows like r. Double r: the field is half as strong, but the loop is twice as long. The two effects cancel exactly, so the integral depends only on I.</div></details>
+  </div>
+  <div class="insight"><div class="lab-t">Key insight</div>
+    <p>For any circle around the wire, ∮ B · dℓ = μ₀I. The size of the loop drops out. The only thing left is the current.</p></div>
+  <button class="next" onclick="unlock(7)">Continue to Module 7 →</button>
+</section>
+
+<!-- ============ MODULE 7 ============ -->
+<section class="mod hidden" id="mod7" data-n="7">
+  <div><span class="mtag">MODULE 7 / 7</span><h2>Any loop at all: the full statement</h2></div>
+  <div class="hook"><b>?</b><p>Squash the circle into a blob, or slide it off the wire entirely. What survives?</p></div>
+  <div class="eqhero">
+    <div data-tex="\vB\cdot\vdl \;=\; \frac{\mu_0 I}{2\pi r}\,\bigl(r\,d\phi\bigr) \;=\; \frac{\mu_0 I}{2\pi}\,d\phi"></div>
+    <div data-tex="\oint \vB\cdot\vdl \;=\; \frac{\mu_0 I}{2\pi}\oint d\phi \;=\; \mu_0 I_{\text{enc}}"></div>
+    <div class="chips"><span class="chip">Only the "around the wire" part of each step counts</span></div>
+  </div>
+  <div class="prose">
+    <p>Is a circle special? Split any step dℓ into two pieces: a piece pointing straight away from the wire, and a piece going around it, of length r dφ (dφ is the small angle the step sweeps out, seen from the wire). B circles the wire, so it is perpendicular to the "away" piece, which contributes nothing. Only the "around" piece counts, and for that piece the r cancels again, step by step.</p>
+    <p>So each step contributes μ₀I/2π times the angle it sweeps. The integral just counts angle. Follow the violet line from the wire to your position as you trace the loop.</p>
+  </div>
+  <div class="lab">
+    <div class="cw"><canvas id="c7" data-h="340"></canvas></div>
+    <div class="ctrls">
+      <label class="sl"><span class="sl-top">Loop shape (circle → blob)<output id="o7s"></output></span><input type="range" id="s7s" min="0" max="100" value="45"></label>
+      <label class="sl"><span class="sl-top">Slide the loop sideways<output id="o7o"></output></span><input type="range" id="s7o" min="0" max="100" value="0"></label>
+      <label class="sl"><span class="sl-top">How far around<output id="o7p"></output></span><input type="range" id="s7p" min="0" max="100" value="70"></label>
+    </div>
+    <div class="eqlive"><span class="cap">With your numbers (I = 10 A)</span><div id="L7"></div><div class="note" id="N7"></div></div>
+  </div>
+  <div class="think"><div class="lab-t">Think about it</div>
+    <p>Slide the loop until the wire is outside it. Some steps are green, some are red. Why do they cancel exactly?</p>
+    <details><summary>Show answer</summary><div>Watch the violet line from the wire to your position. If the wire is outside, the line swings one way, then swings back, and ends where it started. Net angle: 0, so the integral is 0. If the wire is inside, the line makes one full turn, 2π, so the integral is μ₀I. Only current that the loop goes around counts.</div></details>
+  </div>
+  <div class="insight"><div class="lab-t">Key insight</div>
+    <p>∮ B · dℓ depends only on the current the loop encloses. Not the shape, not the size, not the position. That is Ampère's law.</p></div>
+
+  <div class="howto">
+    <h3>⚡ How to use Ampère's law in practice</h3>
+    <p>Ampère's law is always true. It is only <em>useful</em> for finding B when you can pick a loop that makes the left side easy, which means bringing back the two conditions from Module 3.</p>
+    <div class="steps">
+      <div class="step"><b class="n">1</b><div>Use symmetry to figure out which way B points and what it can depend on.</div></div>
+      <div class="step"><b class="n">2</b><div>Choose a loop made of pieces where B ∥ dℓ with |B| constant, or B ⊥ dℓ (or B = 0) so the piece contributes nothing.</div></div>
+      <div class="step"><b class="n">3</b><div>Left side: ∮ B · dℓ = |B| L, where L is the length of the parallel pieces. Right side: μ₀ I<sub>enc</sub>. Solve for |B|.</div></div>
+    </div>
+    <div class="exs">
+      <div class="ex"><h4>Long straight wire</h4><p>Circle of radius r centred on the wire.</p><div class="m" data-tex="\begin{gathered}|\vB|(2\pi r)=\mu_0 I\\ \Downarrow\\ |\vB|=\frac{\mu_0 I}{2\pi r}\end{gathered}"></div></div>
+      <div class="ex"><h4>Solenoid (inside)</h4><p>Rectangle through the wall, side ℓ inside. B = 0 outside, B ⊥ dℓ on the short sides. n turns per metre.</p><div class="m" data-tex="\begin{gathered}|\vB|\,\ell=\mu_0 (n\ell) I\\ \Downarrow\\ |\vB|=\mu_0 n I\end{gathered}"></div></div>
+      <div class="ex"><h4>Toroid (inside)</h4><p>Circle of radius r inside the donut, enclosing all N turns.</p><div class="m" data-tex="\begin{gathered}|\vB|(2\pi r)=\mu_0 N I\\ \Downarrow\\ |\vB|=\frac{\mu_0 N I}{2\pi r}\end{gathered}"></div></div>
+    </div>
+  </div>
+
+  <div class="final">
+    <div class="cap">Ampère's law</div>
+    <div class="big" data-tex="\oint \vec B\cdot d\vec\ell \;=\; \mu_0\, I_{\text{enc}}"></div>
+    <p>Around any closed loop, the line integral of B equals μ₀ times the current passing through the loop. Shape, size and position do not matter. Only the enclosed current does. (This form holds for steady currents.)</p>
+    <div class="defs"><span>μ₀ = 4π × 10⁻⁷ T·m/A</span><span>∮ = integral around a closed loop</span><span>I<sub>enc</sub>: curl your fingers along the loop, thumb gives positive current</span></div>
+  </div>
+</section>
+
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+const PI = Math.PI, TAU = 2*Math.PI;
+const COL = {B:'#2563eb', Bf:'rgba(37,99,235,0.28)', dl:'#d97706', pos:'#16a34a', neg:'#dc2626',
+  cur:'#ea580c', acc:'#7c3aed', ink:'#0f172a', mut:'#64748b', grid:'#e3e8f2', path:'#c7cfe0'};
+const MACROS = {
+  "\\vB":"\\textcolor{#2563eb}{\\vec{B}}",
+  "\\vdl":"\\textcolor{#d97706}{d\\vec{\\ell}}",
+  "\\Dl":"\\textcolor{#d97706}{\\Delta\\vec{\\ell}}"
+};
+function tex(el, s, display){
+  if(!el) return;
+  if(window.katex){
+    try { katex.render(s, el, {displayMode: display !== false, throwOnError:false, macros:Object.assign({},MACROS)}); }
+    catch(e){ el.textContent = s; }
+  } else el.textContent = s;
+}
+function f(x, d){ d = d===undefined?2:d; if(Math.abs(x) < 0.5*Math.pow(10,-d)) x = 0; return x.toFixed(d); }
+function clr(v){ return v >= 0 ? '#16a34a' : '#dc2626'; }
+
+/* ---------- canvas helpers ---------- */
+const C = {};
+function setup(id){
+  const cv = $(id), W = cv.parentElement.clientWidth || 800, H = +cv.dataset.h;
+  const dpr = window.devicePixelRatio || 1;
+  cv.width = Math.round(W*dpr); cv.height = Math.round(H*dpr); cv.style.height = H+'px';
+  const ctx = cv.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0);
+  C[id] = {ctx, W, H}; return C[id];
+}
+function arrow(ctx, x1,y1,x2,y2, col, lw, head){
+  lw = lw||2.5; head = head||10;
+  const dx=x2-x1, dy=y2-y1, len=Math.hypot(dx,dy); if(len < 1) return;
+  const ux=dx/len, uy=dy/len, h=Math.min(head, len*0.55), w=h*0.5;
+  ctx.save(); ctx.strokeStyle=col; ctx.fillStyle=col; ctx.lineWidth=lw; ctx.lineCap='round';
+  ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2-ux*h*0.8, y2-uy*h*0.8); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(x2,y2);
+  ctx.lineTo(x2-ux*h-uy*w, y2-uy*h+ux*w); ctx.lineTo(x2-ux*h+uy*w, y2-uy*h-ux*w);
+  ctx.closePath(); ctx.fill(); ctx.restore();
+}
+function label(ctx, s, x, y, col, size, weight, align){
+  ctx.save(); ctx.fillStyle = col||COL.ink;
+  ctx.font = (weight||600)+' '+(size||14)+"px Inter, system-ui, sans-serif";
+  ctx.textAlign = align||'center'; ctx.textBaseline='middle'; ctx.fillText(s,x,y); ctx.restore();
+}
+function grid(ctx, W, H){
+  ctx.fillStyle = COL.grid;
+  for(let x=14; x<W; x+=28) for(let y=14; y<H; y+=28){ ctx.beginPath(); ctx.arc(x,y,1.3,0,TAU); ctx.fill(); }
+}
+function dashed(ctx, pts, col, lw, dash){
+  ctx.save(); ctx.strokeStyle=col; ctx.lineWidth=lw||2; ctx.setLineDash(dash||[6,6]);
+  ctx.beginPath(); pts.forEach((p,i)=> i? ctx.lineTo(p.x,p.y) : ctx.moveTo(p.x,p.y)); ctx.stroke(); ctx.restore();
+}
+function wire(ctx, x, y){
+  ctx.save();
+  ctx.fillStyle='rgba(234,88,12,0.12)'; ctx.beginPath(); ctx.arc(x,y,19,0,TAU); ctx.fill();
+  ctx.fillStyle=COL.cur; ctx.beginPath(); ctx.arc(x,y,11,0,TAU); ctx.fill();
+  ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(x,y,3.4,0,TAU); ctx.fill();
+  ctx.restore();
+}
+function pill(ctx, s, x, y, col){
+  ctx.save(); ctx.font="600 13px Inter, sans-serif";
+  const w = ctx.measureText(s).width + 18;
+  ctx.fillStyle='#ffffff'; ctx.strokeStyle=COL.grid; ctx.lineWidth=1;
+  ctx.beginPath(); if(ctx.roundRect) ctx.roundRect(x-w/2, y-12, w, 24, 12); else ctx.rect(x-w/2,y-12,w,24);
+  ctx.fill(); ctx.stroke(); ctx.restore();
+  label(ctx, s, x, y, col||COL.ink, 13, 600);
+}
+
+/* ---------- MODULE 1 ---------- */
+function draw1(){
+  const c = C.c1; if(!c) return; const {ctx,W,H} = c;
+  const th = +$('s1a').value, Bm = +$('s1B').value, dm = +$('s1d').value;
+  $('o1a').textContent = th+'°'; $('o1B').textContent = Bm.toFixed(1); $('o1d').textContent = dm.toFixed(1);
+  ctx.clearRect(0,0,W,H); grid(ctx,W,H);
+  const k = Math.min(1, W/620)*54, ox = W/2, oy = H*0.52, t = th*PI/180;
+  const val = Bm*dm*Math.cos(t), col = clr(val);
+
+  // path line through dl
+  dashed(ctx, [{x:16,y:oy},{x:W-16,y:oy}], COL.path, 1.5, [4,6]);
+  // B parallel component along the path line
+  const px = ox + Bm*k*Math.cos(t);
+  ctx.save(); ctx.strokeStyle=col; ctx.lineWidth=7; ctx.lineCap='round'; ctx.globalAlpha=0.85;
+  ctx.beginPath(); ctx.moveTo(ox, oy+16); ctx.lineTo(px, oy+16); ctx.stroke(); ctx.restore();
+  if(Math.abs(px-ox) > 30) label(ctx, 'B∥ = |B| cos θ', (ox+px)/2, oy+36, col, 13, 700);
+  // drop line
+  const bx = ox + Bm*k*Math.cos(t), by = oy - Bm*k*Math.sin(t);
+  dashed(ctx, [{x:bx,y:by},{x:px,y:oy+16}], '#94a3b8', 1.5, [4,4]);
+  // dl and B
+  arrow(ctx, ox,oy, ox+dm*k, oy, COL.dl, 5, 15);
+  label(ctx, 'dℓ', ox+dm*k+18, oy-14, COL.dl, 18, 700);
+  arrow(ctx, ox,oy, bx,by, COL.B, 5, 15);
+  label(ctx, 'B', bx+18*Math.cos(t), by-18*Math.sin(t), COL.B, 18, 700);
+  // angle arc
+  if(th > 2){
+    ctx.save(); ctx.strokeStyle=COL.acc; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.arc(ox,oy,30,-t,0); ctx.stroke(); ctx.restore();
+    label(ctx, 'θ', ox+46*Math.cos(t/2), oy-46*Math.sin(t/2), COL.acc, 15, 700);
+  }
+  // bar
+  const bw = Math.min(380, W-120), bxl = W/2-bw/2, byy = H-30;
+  ctx.fillStyle='#eef1f7'; ctx.fillRect(bxl, byy-7, bw, 14);
+  const frac = val/9; ctx.fillStyle = col;
+  if(frac >= 0) ctx.fillRect(W/2, byy-7, frac*bw/2, 14); else ctx.fillRect(W/2+frac*bw/2, byy-7, -frac*bw/2, 14);
+  ctx.fillStyle='#94a3b8'; ctx.fillRect(W/2-1, byy-11, 2, 22);
+  label(ctx, 'B · dℓ', bxl-8, byy, COL.mut, 12, 600, 'right');
+  label(ctx, f(val), bxl+bw+8, byy, col, 13, 700, 'left');
+
+  tex($('L1'), `\\vB\\cdot\\vdl = (${Bm.toFixed(1)})(${dm.toFixed(1)})\\cos(${th}^\\circ) = \\textcolor{${col}}{\\mathbf{${f(val)}}}`);
+}
+
+/* ---------- MODULE 2 ---------- */
+const y2 = x => 1.2*Math.sin(PI*x/4);
+const B2 = (x,y) => [0.6+0.8*y, 0.4*Math.sin(PI*x/2)];
+const EXACT2 = (function(){ let s=0, n=6000;
+  for(let i=0;i<n;i++){ const xa=4*i/n, xb=4*(i+1)/n, ya=y2(xa), yb=y2(xb), b=B2((xa+xb)/2,(ya+yb)/2);
+    s += b[0]*(xb-xa) + b[1]*(yb-ya); } return s; })();
+function draw2(){
+  const c = C.c2; if(!c) return; const {ctx,W,H} = c;
+  const N = +$('s2n').value; $('o2n').textContent = N;
+  ctx.clearRect(0,0,W,H); grid(ctx,W,H);
+  const sc = Math.min((W-80)/4.4, (H-50)/1.75), x0 = (W-4*sc)/2, yb = H-34;
+  const X = x => x0 + x*sc, Y = y => yb - y*sc;
+  // field
+  for(let gx=-0.2; gx<=4.25; gx+=0.45) for(let gy=-0.1; gy<=1.6; gy+=0.42){
+    const b = B2(gx,gy), L = 0.2*sc;
+    const m = Math.hypot(b[0],b[1]), ux=b[0]/m, uy=b[1]/m, len=L*m/1.9+6;
+    arrow(ctx, X(gx)-ux*len/2, Y(gy)+uy*len/2, X(gx)+ux*len/2, Y(gy)-uy*len/2, COL.Bf, 1.6, 6);
+  }
+  // smooth path
+  const pts=[]; for(let i=0;i<=200;i++){ const x=4*i/200; pts.push({x:X(x), y:Y(y2(x))}); }
+  dashed(ctx, pts, COL.path, 2.5, [7,6]);
+  // steps
+  let s = 0;
+  for(let i=0;i<N;i++){
+    const xa=4*i/N, xb=4*(i+1)/N, ya=y2(xa), ybb=y2(xb), b=B2(xa,ya);
+    s += b[0]*(xb-xa) + b[1]*(ybb-ya);
+    arrow(ctx, X(xa),Y(ya), X(xb),Y(ybb), COL.dl, N>30?2:3, N>30?7:11);
+    if(N <= 14){
+      const L = 0.32*sc*Math.hypot(b[0],b[1])/1.9 + 10, m=Math.hypot(b[0],b[1]);
+      arrow(ctx, X(xa),Y(ya), X(xa)+b[0]/m*L, Y(ya)-b[1]/m*L, COL.B, 2.5, 9);
+    }
+    ctx.fillStyle=COL.ink; ctx.beginPath(); ctx.arc(X(xa),Y(ya),N>30?2:3.5,0,TAU); ctx.fill();
+  }
+  ctx.fillStyle=COL.ink; ctx.beginPath(); ctx.arc(X(4),Y(0),3.5,0,TAU); ctx.fill();
+  label(ctx,'a',X(0)-12,Y(0)+4,COL.ink,15,700); label(ctx,'b',X(4)+12,Y(0)+4,COL.ink,15,700);
+  if(N<=14) pill(ctx, 'blue arrows: B at the start of each step', W/2, 18, COL.B);
+
+  const err = (s-EXACT2)/EXACT2*100;
+  tex($('L2'), `\\sum_{i=1}^{${N}} \\textcolor{#2563eb}{\\vec B_i}\\cdot\\Dl_i = \\mathbf{${f(s,3)}} \\qquad \\int_a^b \\vB\\cdot\\vdl = ${f(EXACT2,3)}`);
+  $('N2').innerHTML = `With N = ${N} step${N>1?'s':''}, the sum is off by <b style="color:${Math.abs(err)<1?'#16a34a':'#dc2626'}">${f(Math.abs(err),1)}%</b>`;
+}
+
+/* ---------- MODULE 3 ---------- */
+function draw3(){
+  const c = C.c3; if(!c) return; const {ctx,W,H} = c;
+  const p = +$('s3p').value/100, h = +$('s3h').value, Bm = 1.5;
+  $('o3p').textContent = Math.round(p*100)+'%'; $('o3h').textContent = h.toFixed(2);
+  ctx.clearRect(0,0,W,H); grid(ctx,W,H);
+  const sc = Math.min((W-80)/4, (H-60)/1.75), x0=(W-4*sc)/2, yb=H-28;
+  const X = x => x0+x*sc, Y = y => yb-y*sc;
+  const M=400, P=[], cum=[0];
+  for(let i=0;i<=M;i++){ const x=4*i/M; P.push({mx:x, my:h*Math.sin(PI*x/4), x:X(x), y:Y(h*Math.sin(PI*x/4))}); }
+  for(let i=1;i<=M;i++) cum.push(cum[i-1]+Math.hypot(P[i].mx-P[i-1].mx, P[i].my-P[i-1].my));
+  const Lt = cum[M], idx = Math.round(p*M), Ls = cum[idx];
+  dashed(ctx, P, COL.path, 2.5, [7,6]);
+  // progress
+  ctx.save(); ctx.strokeStyle=COL.pos; ctx.lineWidth=6; ctx.lineCap='round'; ctx.beginPath();
+  for(let i=0;i<=idx;i++) i? ctx.lineTo(P[i].x,P[i].y) : ctx.moveTo(P[i].x,P[i].y);
+  ctx.stroke(); ctx.restore();
+  // B tangent arrows
+  const tan = i => { const a=P[Math.max(0,i-2)], b=P[Math.min(M,i+2)], d=Math.hypot(b.x-a.x,b.y-a.y)||1; return [(b.x-a.x)/d,(b.y-a.y)/d]; };
+  const bl = Math.min(40, 0.3*sc);
+  for(let k=0;k<9;k++){
+    const i = Math.round((k+0.5)/9*M), t=tan(i), q=P[i];
+    arrow(ctx, q.x-t[0]*bl/2-t[1]*16, q.y-t[1]*bl/2+t[0]*16, q.x+t[0]*bl/2-t[1]*16, q.y+t[1]*bl/2+t[0]*16, COL.B, 2.5, 9);
+  }
+  if(idx>0 && idx<M){ const t=tan(idx), q=P[idx]; arrow(ctx, q.x, q.y, q.x+t[0]*30, q.y+t[1]*30, COL.dl, 3.5, 12);
+    ctx.fillStyle=COL.pos; ctx.beginPath(); ctx.arc(q.x,q.y,5,0,TAU); ctx.fill(); }
+  pill(ctx, 'B is tangent to the path everywhere, so cos θ = 1', W/2, 18, COL.B);
+
+  tex($('L3'), `\\int \\vB\\cdot\\vdl = |\\vB|\\,L = (1.5)(${f(Ls)}) = \\textcolor{#16a34a}{\\mathbf{${f(Bm*Ls)}}}`);
+  $('N3').innerHTML = `Whole path: L = ${f(Lt)}, so the full integral is <b>${f(Bm*Lt)}</b>`;
+}
+
+/* ---------- MODULE 4 ---------- */
+function draw4(){
+  const c = C.c4; if(!c) return; const {ctx,W,H} = c;
+  const bd = +$('s4b').value, a = +$('s4w').value/100, p = +$('s4p').value/100, Bm = 1.5;
+  $('o4b').textContent = bd+'°'; $('o4w').textContent = Math.round(a*100)+'%'; $('o4p').textContent = Math.round(p*100)+'%';
+  const be = bd*PI/180, Bx = Bm*Math.cos(be), By = Bm*Math.sin(be);
+  ctx.clearRect(0,0,W,H); grid(ctx,W,H);
+  const sc = Math.min((W-90)/4, (H-40)/2.7), x0=(W-4*sc)/2;
+  const X = x => x0+x*sc, Y = y => H-22-(y+1.0)*sc;
+  // uniform field
+  for(let gx=34; gx<W; gx+=68) for(let gy=30; gy<H; gy+=60)
+    arrow(ctx, gx-13*Math.cos(be), gy+13*Math.sin(be), gx+13*Math.cos(be), gy-13*Math.sin(be), COL.Bf, 1.8, 7);
+  const yp = x => 0.15*x + 0.85*a*Math.sin(3*PI*x/4);
+  const M=400, P=[]; for(let i=0;i<=M;i++){ const x=4*i/M; P.push({mx:x,my:yp(x),x:X(x),y:Y(yp(x))}); }
+  dashed(ctx, P, COL.path, 2.5, [7,6]);
+  const idx = Math.round(p*M); let s=0;
+  ctx.save(); ctx.lineWidth=6; ctx.lineCap='round';
+  for(let i=0;i<idx;i++){
+    const d = Bx*(P[i+1].mx-P[i].mx) + By*(P[i+1].my-P[i].my); s += d;
+    ctx.strokeStyle = clr(d); ctx.beginPath(); ctx.moveTo(P[i].x,P[i].y); ctx.lineTo(P[i+1].x,P[i+1].y); ctx.stroke();
+  }
+  ctx.restore();
+  const A = P[0], Q = P[idx];
+  const dot = Bx*(Q.mx-A.mx) + By*(Q.my-A.my);
+  if(idx>0){ ctx.save(); ctx.setLineDash([6,5]); arrow(ctx, A.x,A.y, Q.x,Q.y, COL.acc, 2.5, 12); ctx.restore();
+    label(ctx,'Δr', (A.x+Q.x)/2, (A.y+Q.y)/2-14, COL.acc, 15, 700); }
+  [[A,'A'],[Q,'P']].forEach(([q,n])=>{ ctx.fillStyle=COL.ink; ctx.beginPath(); ctx.arc(q.x,q.y,5,0,TAU); ctx.fill();
+    label(ctx,n,q.x+(n==='A'?-14:14),q.y+12,COL.ink,15,700); });
+
+  const cs = clr(s);
+  tex($('L4'), `\\int_A^P \\vB\\cdot\\vdl = \\textcolor{${cs}}{\\mathbf{${f(s)}}} \\qquad\\qquad \\vB\\cdot\\textcolor{#7c3aed}{\\Delta\\vec r} = \\textcolor{${clr(dot)}}{\\mathbf{${f(dot)}}}`);
+}
+
+/* ---------- MODULE 5 ---------- */
+function blen(I, r){ return Math.max(8, Math.min(60, 3.4*I*(0.04/r))); }
+function draw5(){
+  const c = C.c5; if(!c) return; const {ctx,W,H} = c;
+  const I = +$('s5I').value, rcm = +$('s5r').value, r = rcm/100;
+  $('o5I').textContent = I+' A'; $('o5r').textContent = rcm+' cm';
+  ctx.clearRect(0,0,W,H); grid(ctx,W,H);
+  const cx=W/2, cy=H/2, pxm = Math.min(W*0.44, H*0.46)/0.20;
+  // background field rings
+  for(let rr=0.04; rr<=0.205; rr+=0.04){
+    const R=rr*pxm; ctx.save(); ctx.strokeStyle='#e8edf8'; ctx.lineWidth=1.2; ctx.beginPath(); ctx.arc(cx,cy,R,0,TAU); ctx.stroke(); ctx.restore();
+    for(let i=0;i<12;i++){ const a=i/12*TAU+0.26, L=blen(I,rr)*0.8, px=cx+R*Math.cos(a), py=cy+R*Math.sin(a), tx=Math.sin(a), ty=-Math.cos(a);
+      arrow(ctx, px-tx*L/2, py-ty*L/2, px+tx*L/2, py+ty*L/2, 'rgba(37,99,235,0.42)', 1.8, 7); }
+  }
+  // Amperian loop
+  const R = r*pxm;
+  ctx.save(); ctx.strokeStyle=COL.acc; ctx.lineWidth=2.5; ctx.setLineDash([7,6]); ctx.beginPath(); ctx.arc(cx,cy,R,0,TAU); ctx.stroke(); ctx.restore();
+  for(let i=0;i<12;i++){ const a=i/12*TAU, L=blen(I,r), px=cx+R*Math.cos(a), py=cy+R*Math.sin(a), tx=Math.sin(a), ty=-Math.cos(a);
+    if(i===9) continue;
+    arrow(ctx, px-tx*L/2, py-ty*L/2, px+tx*L/2, py+ty*L/2, COL.B, 3, 10); }
+  // B and dl at the top, side by side
+  const top = {x:cx, y:cy-R}, L=blen(I,r);
+  arrow(ctx, top.x+L/2, top.y-8, top.x-L/2, top.y-8, COL.B, 3, 10);
+  arrow(ctx, top.x+15, top.y+8, top.x-15, top.y+8, COL.dl, 3, 10);
+  label(ctx,'B',top.x-L/2-14,top.y-10,COL.B,15,700); label(ctx,'dℓ',top.x+28,top.y+10,COL.dl,15,700);
+  // radius
+  const ra = PI/5;
+  dashed(ctx, [{x:cx,y:cy},{x:cx+R*Math.cos(ra),y:cy+R*Math.sin(ra)}], COL.mut, 1.5, [4,4]);
+  label(ctx,'r',cx+R*0.55*Math.cos(ra)+10,cy+R*0.55*Math.sin(ra)-8,COL.mut,15,700);
+  wire(ctx,cx,cy);
+  pill(ctx,'● I flows out of the page', W/2, H-20, COL.cur);
+
+  const B = 0.2*I/r; // microtesla
+  tex($('L5'), `|\\vB| = \\frac{\\mu_0 I}{2\\pi r} = \\frac{(4\\pi\\times10^{-7})(${I})}{2\\pi\\,(${f(r)})} = \\textcolor{#2563eb}{\\mathbf{${f(B,1)}\\ \\mu\\text{T}}}`);
+}
+
+/* ---------- MODULE 6 ---------- */
+function draw6(){
+  const c = C.c6; if(!c) return; const {ctx,W,H} = c;
+  const p = +$('s6p').value/100, rcm = +$('s6r').value, r = rcm/100, I = +$('s6I').value;
+  $('o6p').textContent = Math.round(p*100)+'%'; $('o6r').textContent = rcm+' cm'; $('o6I').textContent = I+' A';
+  ctx.clearRect(0,0,W,H); grid(ctx,W,H);
+  const wide = W > 640, cx = wide ? W*0.37 : W/2, cy = H/2;
+  const pxm = Math.min((wide?W*0.3:W*0.44), H*0.46)/0.20, R = r*pxm;
+  ctx.save(); ctx.strokeStyle=COL.path; ctx.lineWidth=2; ctx.setLineDash([7,6]); ctx.beginPath(); ctx.arc(cx,cy,R,0,TAU); ctx.stroke(); ctx.restore();
+  if(p>0){ ctx.save(); ctx.strokeStyle=COL.pos; ctx.lineWidth=6; ctx.lineCap='round';
+    ctx.beginPath(); ctx.arc(cx,cy,R,-PI/2,-PI/2-p*TAU,true); ctx.stroke(); ctx.restore(); }
+  if(p>=0.999){ ctx.save(); const g=ctx.createRadialGradient(cx,cy,R*0.2,cx,cy,R*1.35);
+    g.addColorStop(0,'rgba(22,163,74,0.12)'); g.addColorStop(1,'rgba(22,163,74,0)'); ctx.fillStyle=g;
+    ctx.beginPath(); ctx.arc(cx,cy,R*1.35,0,TAU); ctx.fill(); ctx.restore(); }
+  const L = blen(I,r);
+  for(let i=0;i<16;i++){ const frac=i/16; if(frac>p+1e-9) break; const a=-PI/2-frac*TAU;
+    const px=cx+(R+14)*Math.cos(a), py=cy+(R+14)*Math.sin(a), tx=Math.sin(a), ty=-Math.cos(a);
+    arrow(ctx, px-tx*L/2, py-ty*L/2, px+tx*L/2, py+ty*L/2, COL.B, 2.5, 9); }
+  if(p>0 && p<0.999){ const a=-PI/2-p*TAU, px=cx+R*Math.cos(a), py=cy+R*Math.sin(a), tx=Math.sin(a), ty=-Math.cos(a);
+    arrow(ctx, px, py, px+tx*28, py+ty*28, COL.dl, 3.5, 12); }
+  dashed(ctx, [{x:cx,y:cy},{x:cx+R,y:cy}], COL.mut, 1.5, [4,4]);
+  label(ctx,'r',cx+R/2,cy-12,COL.mut,15,700);
+  wire(ctx,cx,cy);
+
+  const B = 0.2*I/r, circ = TAU*r, muI = 0.4*PI*I, s = p*circ, v = B*s;
+  if(wide){
+    const base=H-56, top=60, hmax=base-top, bw=38, gap=26, x1=W*0.66;
+    const bars = [
+      {h:hmax*(0.02/r), col:COL.B, t:'|B|', v:f(B,1)+' μT'},
+      {h:hmax*(r/0.20), col:COL.dl, t:'2πr', v:f(circ,3)+' m'},
+      {h:hmax*0.55, col:COL.pos, t:'|B| × 2πr', v:f(B*circ,2)}
+    ];
+    bars.forEach((b,i)=>{ const x=x1+i*(bw+gap);
+      ctx.fillStyle='#eef1f7'; ctx.fillRect(x,top,bw,hmax);
+      ctx.fillStyle=b.col; ctx.fillRect(x,base-b.h,bw,b.h);
+      label(ctx,b.t,x+bw/2,base+16,b.col,12,700); label(ctx,b.v,x+bw/2,base+32,COL.mut,11,600); });
+    label(ctx,'relative sizes', x1+(3*bw+2*gap)/2, top-18, COL.mut, 12, 600);
+  }
+
+  if(p >= 0.999){
+    tex($('L6'), `\\oint \\vB\\cdot\\vdl = |\\vB|\\,(2\\pi r) = (${f(B,1)}\\ \\mu\\text{T})(${f(circ,3)}\\ \\text{m}) = \\textcolor{#16a34a}{\\mathbf{${f(v,2)}\\ \\mu\\text{T}\\cdot\\text{m}}}`);
+    $('N6').innerHTML = `And μ₀I = (4π × 10⁻⁷)(${I}) = <b style="color:#16a34a">${f(muI,2)} μT·m</b>. They match, for every radius.`;
+  } else {
+    tex($('L6'), `\\int \\vB\\cdot\\vdl = |\\vB|\\,s = (${f(B,1)}\\ \\mu\\text{T})(${f(s,3)}\\ \\text{m}) = \\textcolor{#2563eb}{\\mathbf{${f(v,2)}\\ \\mu\\text{T}\\cdot\\text{m}}}`);
+    $('N6').innerHTML = `s is the distance walked so far. That is <b>${Math.round(p*100)}%</b> of μ₀I = ${f(muI,2)} μT·m. Keep going all the way around.`;
+  }
+}
+
+/* ---------- MODULE 7 ---------- */
+function draw7(){
+  const c = C.c7; if(!c) return; const {ctx,W,H} = c;
+  const sh = +$('s7s').value, of = +$('s7o').value/100, p = +$('s7p').value/100, I = 10, muI = 0.4*PI*I;
+  $('o7s').textContent = sh+'%'; $('o7o').textContent = Math.round(of*100)+'%'; $('o7p').textContent = Math.round(p*100)+'%';
+  ctx.clearRect(0,0,W,H); grid(ctx,W,H);
+  const r0 = Math.min(H*0.27, W*0.17), off = of*2.4*r0;
+  const wx = W/2 - off/2, wy = H/2, lx = W/2 + off/2, ly = H/2;
+  // background field around wire
+  for(let R=34; R<Math.max(W,H); R+=40){
+    const n = Math.max(8, Math.round(R/14)), L = Math.max(5, Math.min(20, 520/R));
+    for(let i=0;i<n;i++){ const a=i/n*TAU+R*0.01, px=wx+R*Math.cos(a), py=wy+R*Math.sin(a);
+      if(px<-10||px>W+10||py<-10||py>H+10) continue;
+      const tx=Math.sin(a), ty=-Math.cos(a);
+      arrow(ctx, px-tx*L/2, py-ty*L/2, px+tx*L/2, py+ty*L/2, 'rgba(37,99,235,0.35)', 1.6, 6); }
+  }
+  // loop points (counterclockwise on screen, starting at the top)
+  const M=360, P=[];
+  for(let i=0;i<=M;i++){ const a=PI/2+i/M*TAU;
+    const blob = sh/100*(0.30*Math.cos(2*a+1)+0.18*Math.cos(3*a+2.1)+0.12*Math.cos(5*a+0.5));
+    const rr = r0*(1+blob); P.push({x:lx+rr*Math.cos(a), y:ly-rr*Math.sin(a)}); }
+  const ang = q => Math.atan2(-(q.y-wy), q.x-wx);
+  let minD = 1e9; P.forEach(q=>{ minD=Math.min(minD, Math.hypot(q.x-wx,q.y-wy)); });
+  dashed(ctx, P, COL.path, 2.2, [7,6]);
+  const idx = Math.round(p*M); let phi = 0;
+  ctx.save(); ctx.lineWidth=6; ctx.lineCap='round';
+  for(let i=0;i<idx;i++){
+    let d = ang(P[i+1]) - ang(P[i]); if(d>PI) d-=TAU; if(d<-PI) d+=TAU; phi += d;
+    ctx.strokeStyle = d>=0 ? COL.pos : COL.neg; ctx.beginPath(); ctx.moveTo(P[i].x,P[i].y); ctx.lineTo(P[i+1].x,P[i+1].y); ctx.stroke();
+  }
+  ctx.restore();
+  // swept angle around the wire
+  const a0 = ang(P[0]);
+  if(Math.abs(phi) > 0.01){
+    ctx.save(); ctx.fillStyle='rgba(124,58,237,0.12)'; ctx.strokeStyle=COL.acc; ctx.lineWidth=2.5;
+    ctx.beginPath(); ctx.moveTo(wx,wy);
+    if(Math.abs(phi) >= TAU-0.02) ctx.arc(wx,wy,30,0,TAU); else ctx.arc(wx,wy,30,-a0,-(a0+phi),phi>0);
+    ctx.closePath(); ctx.fill(); ctx.restore();
+  }
+  const Q = P[idx];
+  dashed(ctx, [{x:wx,y:wy},{x:P[0].x,y:P[0].y}], 'rgba(124,58,237,0.35)', 1.5, [3,5]);
+  dashed(ctx, [{x:wx,y:wy},{x:Q.x,y:Q.y}], COL.acc, 2, [6,5]);
+  if(idx < M){
+    const nx = P[Math.min(M,idx+2)], pv = P[Math.max(0,idx-2)], d=Math.hypot(nx.x-pv.x,nx.y-pv.y)||1;
+    arrow(ctx, Q.x, Q.y, Q.x+(nx.x-pv.x)/d*28, Q.y+(nx.y-pv.y)/d*28, COL.dl, 3.5, 12);
+    ctx.fillStyle=COL.acc; ctx.beginPath(); ctx.arc(Q.x,Q.y,5,0,TAU); ctx.fill();
+  }
+  ctx.fillStyle=COL.ink; ctx.beginPath(); ctx.arc(P[0].x,P[0].y,4,0,TAU); ctx.fill();
+  wire(ctx,wx,wy);
+  const deg = phi*180/PI;
+  pill(ctx, 'Δφ = '+f(deg,0)+'°', wx, Math.max(20, wy-r0*1.75), COL.acc);
+
+  const v = muI*phi/TAU, done = p >= 0.999;
+  const inside = Math.abs(phi) > PI;
+  if(minD < 10){
+    tex($('L7'), `\\text{The wire is sitting on the loop, where } |\\vB| \\to \\infty`);
+    $('N7').textContent = 'Slide the loop a little farther so the wire is clearly inside or outside.';
+    return;
+  }
+  const lhs = done ? '\\oint' : '\\int';
+  let s = `${lhs} \\vB\\cdot\\vdl = \\frac{\\mu_0 I}{2\\pi}\\,\\Delta\\phi = \\frac{${f(muI,2)}\\ \\mu\\text{T}\\cdot\\text{m}}{360^\\circ}\\,(${f(deg,0)}^\\circ) = \\textcolor{${clr(v)}}{\\mathbf{${f(v,2)}\\ \\mu\\text{T}\\cdot\\text{m}}}`;
+  if(done) s += inside ? ` = \\mu_0 I` : ` = 0`;
+  tex($('L7'), s);
+  $('N7').innerHTML = done
+    ? (inside ? 'Wire inside the loop: the violet line made one full turn, so the result is <b style="color:#16a34a">μ₀I</b>, whatever the shape.'
+              : 'Wire outside the loop: the violet line swung out and back, net angle 0, so the result is <b>0</b>. No enclosed current.')
+    : 'Keep going all the way around to close the loop.';
+}
+
+/* ---------- navigation ---------- */
+const DRAW = [null, draw1, draw2, draw3, draw4, draw5, draw6, draw7];
+let unlocked = 1;
+function buildNav(){
+  const d = $('dots');
+  for(let i=1;i<=7;i++){ const b=document.createElement('div'); b.className='dot'; b.id='dot'+i; b.textContent=i;
+    b.onclick = () => { if(i<=unlocked) $('mod'+i).scrollIntoView({behavior:'smooth', block:'start'}); };
+    d.appendChild(b); }
+}
+function updateNav(cur){
+  $('pFill').style.width = (unlocked/7*100)+'%';
+  for(let i=1;i<=7;i++) $('dot'+i).className = 'dot' + (i<=unlocked?' open':'') + (i===cur?' cur':'');
+}
+function show(n){
+  const el = $('mod'+n); if(!el.classList.contains('hidden')) return;
+  el.classList.remove('hidden'); setup('c'+n); DRAW[n]();
+}
+function unlock(n, scroll){
+  for(let i=2;i<=n;i++) show(i);
+  unlocked = Math.max(unlocked, n); updateNav(n);
+  if(scroll !== false) setTimeout(()=> $('mod'+n).scrollIntoView({behavior:'smooth', block:'start'}), 60);
+}
+// highlight the module in view
+const io = new IntersectionObserver(es => { es.forEach(e => { if(e.isIntersecting) updateNav(+e.target.dataset.n); }); }, {rootMargin:'-45% 0px -50% 0px'});
+
+window.addEventListener('load', () => {
+  document.querySelectorAll('[data-tex]').forEach(el => tex(el, el.dataset.tex, true));
+  buildNav(); setup('c1'); draw1(); updateNav(1);
+  document.querySelectorAll('.mod').forEach(m => io.observe(m));
+  document.querySelectorAll('input[type=range]').forEach(inp =>
+    inp.addEventListener('input', () => DRAW[+inp.closest('.mod').dataset.n]()));
+  let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => {
+    for(let i=1;i<=7;i++) if(!$('mod'+i).classList.contains('hidden')){ setup('c'+i); DRAW[i](); } }, 120); });
+});
+</script>
+</body>
+</html>

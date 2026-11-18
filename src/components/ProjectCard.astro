@@ -23,24 +23,28 @@ const { title, category, summary, tools } = project.data;
 <style>
   .card {
     background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 16px;
     padding: 26px 24px;
     display: flex;
     flex-direction: column;
     gap: 14px;
-    transition: background 0.2s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
     position: relative;
   }
 
   .card:hover {
-    background: var(--paper-dim);
+    border-color: color-mix(in srgb, var(--accent) 40%, var(--rule));
+    box-shadow: var(--shadow);
+    transform: translateY(-2px);
   }
 
   .cat {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: 0.72rem;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.09em;
-    color: var(--ink-faint);
+    letter-spacing: 0.08em;
+    color: var(--accent);
   }
 
   h3 {
@@ -67,8 +71,8 @@ const { title, category, summary, tools } = project.data;
   }
 
   .go {
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
+    font-size: 0.85rem;
+    font-weight: 600;
     color: var(--accent);
   }
 </style>

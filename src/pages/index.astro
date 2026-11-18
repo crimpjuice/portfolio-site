@@ -83,8 +83,8 @@ const featured = projects
         <span>Runs in the browser, tracks each student's gaps, and hands them to an AI study coach. <a href="/projects/exam-review/">How it was designed.</a></span>
       </li>
       <li>
-        <a href="https://ampereslaw-intuition.netlify.app/" target="_blank" rel="noopener noreferrer">Road to Amp&egrave;re's Law, an interactive mini-lesson &nearr;</a>
-        <span>Builds a feel for the idea before the mathematics arrives. <a href="/projects/mini-lessons-intuition/">Case study.</a></span>
+        <a href="/demos/amperes-law/" target="_blank" rel="noopener">The Road to Amp&egrave;re's Law, an interactive lesson &nearr;</a>
+        <span>Builds the law step by step, from the dot product to any closed loop, with live interactives. <a href="/projects/mini-lessons-intuition/">Case study.</a></span>
       </li>
       <li>
         <a href="https://heat-temp-energy-misconception.netlify.app/" target="_blank" rel="noopener noreferrer">Heat, Temperature &amp; Internal Energy &nearr;</a>
@@ -154,8 +154,9 @@ const featured = projects
   }
 
   .hero h1 {
-    font-size: clamp(2.3rem, 1.6rem + 3.2vw, 3.7rem);
-    line-height: 1.06;
+    font-size: clamp(2.4rem, 1.6rem + 3.4vw, 4rem);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
     margin-top: 18px;
   }
 
@@ -183,7 +184,7 @@ const featured = projects
   }
 
   .axislabel {
-    font-family: var(--font-mono);
+    font-family: var(--font-code);
     font-size: 10px;
     fill: var(--ink-faint);
   }
@@ -226,8 +227,8 @@ const featured = projects
   }
 
   .pathlabel {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-weight: 600;
+    font-size: 0.74rem;
     text-transform: uppercase;
     letter-spacing: 0.09em;
     color: var(--accent);
@@ -247,15 +248,13 @@ const featured = projects
   .cardgrid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1px;
-    background: var(--rule);
-    border: 1px solid var(--rule);
+    gap: 20px;
   }
 
   .allline {
     margin-top: 28px;
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
+    font-weight: 600;
+    font-size: 0.92rem;
   }
 
   .stats {
@@ -267,7 +266,8 @@ const featured = projects
 
   .stats dd {
     font-family: var(--font-serif);
-    font-weight: 600;
+    font-weight: 700;
+    letter-spacing: -0.03em;
     font-size: 2.3rem;
     margin: 0;
     color: var(--ink);
@@ -285,8 +285,9 @@ const featured = projects
     display: flex;
     flex-direction: column;
     gap: 6px;
-    border-top: 2px solid var(--accent);
-    padding-top: 14px;
+    background: var(--paper-dim);
+    border-radius: 16px;
+    padding: 22px 22px 20px;
   }
 
   .openlist {
@@ -295,13 +296,13 @@ const featured = projects
     padding: 0;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1px;
-    background: var(--rule);
-    border: 1px solid var(--rule);
+    gap: 20px;
   }
 
   .openlist li {
-    background: var(--paper);
+    background: var(--paper-dim);
+    border: 1px solid var(--rule);
+    border-radius: 16px;
     padding: 22px 24px;
     display: flex;
     flex-direction: column;
