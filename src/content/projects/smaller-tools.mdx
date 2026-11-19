@@ -1,0 +1,147 @@
+---
+title: Smaller Tools and Workflows
+category: Teacher Tools
+summary: Four smaller builds from my courses, including an AI feedback workflow for lab reports, a problem-extraction pipeline, a learner intake system and gamified problem sets.
+outcomes: Faster lab-report feedback with an instructor checking every draft, a course-aligned problem bank sorted by difficulty, and practice sets students were more willing to attempt.
+tools: [Claude, ChatGPT, Gemini]
+order: 12
+---
+
+Four smaller builds from my Camosun courses. Each one solves a specific time or motivation problem.
+
+## Lab report feedback
+
+**The problem:** a section of 30 lab reports takes hours to mark, and much of the feedback repeats.
+
+**The workflow:**
+
+1. Give the AI the rubric and a list of common errors from past semesters.
+2. The AI scores each criterion and drafts feedback that cites the rubric.
+3. I read each report next to the draft, correct it and approve it.
+
+The error list keeps the AI from inventing problems. The prompt also sets the audience, the tone and a short length, so students actually read the feedback.
+
+**The result:** feedback cycles take much less time, and the time saved goes to students.
+
+<details>
+<summary>View the working prompt (buoyancy lab example)</summary>
+
+```text
+I am a physics instructor and I will be correcting several lab reports on
+buoyancy and Archimedes principle. I was hoping you could be my assistant
+throughout this task. I will double check your work. I will give you lab
+reports, Evaluation Rubric, Report Expectations and the experiment
+procedure. You will leave concise feedback in simple and plain language
+while grading elements of the report deducting only whole point values
+when needed. You will output the final feedback as bulleted list of
+comments referencing the rubric section. You will also leave a final tally
+of the score. Keep the language neutral to somewhat positive. Common
+places where students lose marks are:
+
+- Not obeying significant figures and precision in gathering their
+  measurements and final calculations. (Remember: every measurement needs
+  uncertainty to one sigfig, and the measurement precision must match the
+  sigfig precision.)
+- Not doing a consistency check to compare experiment and theoretical values
+- Not writing procedure in past tense AND bullet points
+- Not being careful about professional formatting
+- Not describing and introducing tables and graphs
+- In discussion: not identifying VALID sources of error and not digging
+  deep enough into the connection between the sources of error, the
+  theory, the procedure they followed, the final results and their
+  intertwining effects on each other
+- In discussion: not providing sufficient recommendations to changes in
+  the procedure that address the sources of error
+- In conclusion: not recapping the experiment and results with error
+
+When you're ready I will give you the first report. Do not include emojis.
+
+Here are the Report Requirements:
+[INSERT REPORT REQUIREMENTS & ELEMENTS]
+```
+
+</details>
+
+## Problem extraction and difficulty sorting
+
+**The problem:** open textbooks have good problems, but their notation and terms differ from my course's.
+
+**The workflow:** one prompt pulls the problems from a chapter and rewrites them in course notation and terms. It flags any problem where a rewrite might change the meaning. A second prompt sorts the problems into Foundational, Intermediate and Advanced, with a short reason for each. The output is LaTeX.
+
+**The result:** a course-aligned problem bank, sorted for scaffolded assignments, without hours of manual work.
+
+<details>
+<summary>View the extraction prompt (DC Circuits example)</summary>
+
+```text
+I need assistance making a problem set for my physics course (I am the
+instructor). I've attached a screenshot of the module titles for
+reference - Module 9 is on DC Circuits and I want to build a problem set
+for this module. I've also attached six files from which you will draw
+the problems from (these problems are from an open source physics
+textbook). I want you to copy WORD FOR WORD the ODD numbered problems
+only and organize them by the Physics 295 Module titles. Now, in the
+course, we actually skipped 9.5: "Parallel and Series Circuits", so you
+may simply write "Section skipped".
+
+Some of these problems have images - when you encounter an image do not
+worry - I will manually place the image in the final document. Your task
+will be to simply indicate that an image is missing with "IMAGE GOES HERE".
+
+In addition, in the attached files are the answers to the odd numbered
+questions. So it will also be your task to pair up the questions you copy
+to the corresponding answer.
+
+Now, the final output should be formatted as the first section
+"EXERCISES" followed by a section "ANSWERS". The crucial piece is that
+the Exercises are renumbered starting from 1 counting up by one, instead
+of counting up by odd numbers. The Answer key must follow.
+
+Lastly, output everything as LATEX so I can bring it over to Overleaf.
+```
+
+</details>
+
+<details>
+<summary>View the classification prompt</summary>
+
+```text
+Identify, organize, and label the attached physics problems by
+difficulty. There are three difficulty levels. Hard problems can be
+identified when they have about 70% of the following attributes: they
+rely on concepts to solve, math heavy, have data interpretation, real
+world application, hidden information and assumptions, integrate physics
+topics.
+
+Easy problems are problems that probe concepts or terminology or
+definitions or require a single calculation.
+
+Output the newly organized problems as Level 1, Level 2 and Level 3
+reflecting the increase in difficulty. Do not output any answers or
+solutions.
+
+Output as LaTeX so it can be brought over to Overleaf.
+```
+
+</details>
+
+## Learner intake and grouping
+
+**The problem:** most courses are built for an average student who isn't actually in the room.
+
+**The system:**
+
+1. A day-one survey on each student's program, goals, interests and what they do when stuck.
+2. AI-assisted grouping around shared interests.
+3. Problem sets and labs rewritten around those interests, with the same physics.
+4. Short weekly check-ins that shape the next class.
+
+**The result:** impact data is being collected this term.
+
+## Gamified problem sets
+
+**The problem:** traditional homework gives late feedback and no sense of progress, so students avoid it.
+
+**The design:** instant feedback with a short explanation, a visible progress bar, and problems that start easy and get harder. AI helped generate problems matched to course topics and student interests.
+
+**The result:** students said they were more willing to attempt problems on their own, and voluntary practice was higher than with traditional sets in earlier semesters.

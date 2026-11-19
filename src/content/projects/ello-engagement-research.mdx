@@ -1,54 +1,38 @@
 ---
 title: Why Do Kids Quit Math Activities?
 category: Learning Analytics
-summary: Engagement research for Ello, an AI-powered reading and math tutor for kids 4–10. I analysed 379 activities (about 89,000 attempts), playtested the best and worst performers, and tested my own hypothesis about what drives engagement, so polish time went where it would actually matter.
-outcomes: Kids give a sitting about 5 minutes, and each extra minute of math cost about 2.6 points of completion. Most quitting happens a few minutes in, not at the start. The math team got a ranked polish list, a playtest plan, and four design rules, with every finding rated by strength of evidence.
+summary: Engagement research for Ello, an AI reading and math tutor for kids 4–10. I analysed 379 activities (about 89,000 attempts) to find where kids quit and what to fix first.
+outcomes: Kids give a sitting about 5 minutes, and each extra minute of math cost about 2.6 points of completion. The math team got a ranked fix list, a playtest plan and four design rules, with every finding rated by strength of evidence.
 tools: [Claude, Mesa]
 featured: true
 order: 2
 ---
 
-*Ello · AI Learning Designer, Math (Contractor) · Engagement research and analytics · Oct–Nov 2026*
+*Ello · AI Learning Designer, Math (Contractor) · Oct–Nov 2026*
 
 ## The problem
 
-Only 3 of 77 math activities in Ello's app reached the team's 60% completion goal. Polish time was going wherever someone had a hunch, and there was no shared picture of what separated the activities kids finished from the ones they walked away from.
-
-I wanted to know what was actually losing kids, so the next hour of polish went where it would matter.
+Only 3 of 77 math activities reached the team's 60% completion goal. Polish time went wherever someone had a hunch. Nobody could say what separated the activities kids finished from the ones they left.
 
 ## What I did
 
-- **Data:** pulled activity data from Mesa, Ello's authoring platform, for 379 activities (about 89,000 attempts) and compared completion, session length, drop-off timing, and ratings across math, reading, and English-language-learning activities.
-- **Playtests:** played the high- and low-completion activities myself to see what the numbers couldn't show.
-- **Hypothesis test:** I suspected varied interaction and novelty drove engagement, so I checked that against the design tags Mesa stores on each activity.
-- **Research:** pulled the learning-science background into a primer the team could use: Mayer's multimedia principles, cognitive load, and seductive details (fun that costs learning).
+- **Data:** compared completion, session length, drop-off timing and ratings for 379 activities (about 89,000 attempts) in Mesa, Ello's authoring platform.
+- **Playtests:** played the best and worst activities myself.
+- **Hypothesis test:** checked my own guess about what drives engagement against the design tags Mesa stores.
+- **Research:** wrote a primer on the learning science behind it (Mayer's multimedia principles, cognitive load, seductive details).
 
 ## What I found
 
-**Kids give a sitting about 5 minutes.** Time per sitting barely changed between activities. Total length did, and each extra minute in math cost about 2.6 points of completion.
+- **Kids give a sitting about 5 minutes.** Each extra minute of math cost about 2.6 points of completion.
+- **Most kids quit a few minutes in.** Leaving in the first 30 seconds was only 14% of losses. The first round or two after the hook mattered most.
+- **One difficulty step can be a cliff.** In one matched pair, completion fell almost 20 points from Tier 1 to Tier 2 while ratings held steady.
+- **Varied interactions help.** Each extra interaction type went with higher ratings. Packing more skills into one activity didn't help.
+- **The best finisher teaches almost nothing.** *Would You Rather?* reached about 85% completion by being short, offering a choice every turn and making kids laugh. It became the benchmark for how a math activity should feel.
 
-**Most quitting happens a few minutes in, not at the start.** Bounces (leaving within 30 seconds) were only 14% of losses. The first round or two after the opening hook mattered most.
+## How sure I was
 
-**One difficulty step can be a cliff.** In one matched pair, completion fell almost 20 points from Tier 1 to Tier 2 while ratings held steady. Something in the harder tier was stopping kids, not putting them off.
+I rated every finding by strength of evidence and named its limits. Ratings only come from kids who finish. Struggling activities get revised more often. The activities I polished finished more often (median 49% vs 43%), but without a before-and-after test I could not credit the polish, and I said so.
 
-**Variety in how kids interact helps; covering more skills doesn't.** Each extra interaction type went with higher positive ratings. Packing more skills into one activity didn't.
+## What changed
 
-**The app's best finisher teaches almost nothing.** *Would You Rather?* reached about 85% completion by being short, giving a choice every turn, and making kids laugh. That became the benchmark for what engagement feels like. The job is getting a math activity to feel like that while still teaching.
-
-## Rigor
-
-I rated every finding by strength of evidence and named its limits:
-
-- Ratings only come from kids who finished, so they flatter long activities.
-- Activities that struggled got revised more often, so "revisions" and "low completion" looked linked for the wrong reason.
-- Math activities I'd polished finished more often than the rest (median 49% vs 43%). I said plainly that this couldn't be credited to the polish without a before/after or A/B test.
-
-That last one mattered to me. It would have been easy to claim the win.
-
-## Evidence of impact
-
-> The math team got a ranked polish list, a playtest plan, and four design rules: **keep it short, keep kids busy, offer choices, vary the interactions.** The findings fed directly into [The Polish Playbook](/projects/ello-polish-playbook/), which turned them into how each activity was revised and measured.
-
-## Transferable skills demonstrated
-
-Engagement analytics at scale, survival / drop-off analysis, hypothesis testing against product metadata, mixed-methods research (data, playtests, and literature), and the discipline to separate what the data shows from what it can't yet prove. Also: turning analysis into something a team can act on the next morning.
+The math team got a ranked fix list, a playtest plan and four design rules: **keep it short, keep kids busy, offer choices, vary the interactions.** The findings became the basis of [The Polish Playbook](/projects/ello-polish-playbook/).
